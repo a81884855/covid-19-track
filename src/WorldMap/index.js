@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import {
   ZoomableGroup,
   ComposableMap,
@@ -6,6 +6,8 @@ import {
   Geography,
   Sphere,
 } from "react-simple-maps";
+
+import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
@@ -20,16 +22,37 @@ const rounded = (num) => {
   }
 };
 
+console.log(geoUrl);
 const MapChart = ({ setTooltipContent }) => {
+  const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
+
+  const handleZoomIn = () => {
+    if (position.zoom >= 4) return;
+    setPosition((pos) => ({ ...pos, zoom: pos.zoom * 2 }));
+  };
+
+  const handleZoomOut = () => {
+    if (position.zoom <= 1) return;
+    setPosition((pos) => ({ ...pos, zoom: pos.zoom / 2 }));
+  };
+
+  const handleMoveEnd = (position) => {
+    setPosition(position);
+  };
+
   return (
     <>
       <ComposableMap
         data-tip=""
-        projectionConfig={{ scale: 155 }}
-        width={800}
+        projectionConfig={{ scale: 125 }}
+        width={700}
         height={400}
       >
-        <ZoomableGroup>
+        <ZoomableGroup
+          zoom={position.zoom}
+          center={position.coordinates}
+          onMoveEnd={handleMoveEnd}
+        >
           <Sphere />
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
@@ -64,6 +87,10 @@ const MapChart = ({ setTooltipContent }) => {
           </Geographies>
         </ZoomableGroup>
       </ComposableMap>
+      <div className="controls">
+        <FaPlusCircle className="controls-icons" onClick={handleZoomIn} />
+        <FaMinusCircle className="controls-icons" onClick={handleZoomOut} />
+      </div>
     </>
   );
 };
