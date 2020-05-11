@@ -5,10 +5,22 @@ html {
 
 body {
   margin: 0;
-  padding: 0 1.5rem;
 }
 
 svg {
   display: inline-block;
   vertical-align: middle;
+}
+
+.controls {
+  font-size: x-large;
+  float: right;
+}
+
+.controls-icons {
+  margin: 5px;
+}
+
+.controls-icons:hover {
+  fill: #ff5533;
 }
