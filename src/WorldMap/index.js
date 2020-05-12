@@ -8,6 +8,7 @@ import {
 } from "react-simple-maps";
 
 import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
+import "./index.css";
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
