@@ -14,6 +14,8 @@ const Board = () => {
     switch (country) {
       case "United States of America":
         return "Uninted States";
+      case "Russian Federation":
+        return "Russia";
       default:
         return country;
     }
