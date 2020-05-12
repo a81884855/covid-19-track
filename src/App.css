@@ -5,6 +5,7 @@ html {
 
 body {
   margin: 0;
+  width: 100%;
 }
 
 svg {
@@ -15,6 +16,9 @@ svg {
 .controls {
   font-size: x-large;
   float: right;
+  position: absolute;
+  margin-top: -56px;
+  right: 30px;
 }
 
 .controls-icons {
