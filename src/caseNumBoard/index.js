@@ -3,6 +3,7 @@ import axios from "axios";
 import { Table } from "react-bootstrap";
 
 const apiUrl = "https://api.covid19api.com/summary";
+// const apiUrl = "http://localhost:4000/";
 // https://api.covid19api.com/summary
 // https://thevirustracker.com/free-api?global=stats
 
@@ -40,25 +41,31 @@ const Board = () => {
     //   padding: 30,
     // }}
     >
-      <h4>Total Cases</h4>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Country</th>
-            <th>Case #</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.slice(0, 10).map((row, i) => (
-            <tr key={row.Country}>
-              <td>{i + 1}</td>
-              <td>{countryName(row.Country)}</td>
-              <td>{row.TotalConfirmed}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      {err ? (
+        <>
+          <h4>Total Cases</h4>
+          <Table striped borderless hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Country</th>
+                <th>Case #</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.slice(0, 10).map((row, i) => (
+                <tr key={row.Country}>
+                  <td>{i + 1}</td>
+                  <td>{countryName(row.Country)}</td>
+                  <td>{row.TotalConfirmed}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </>
+      ) : (
+        <div>Sorry... Some Error on fetching data</div>
+      )}
     </div>
   );
 };
