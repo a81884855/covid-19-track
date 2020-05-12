@@ -1,0 +1,15 @@
+.controls {
+  font-size: x-large;
+  float: right;
+  position: absolute;
+  margin-top: -56px;
+  right: 30px;
+}
+
+.controls-icons {
+  margin: 5px;
+}
+
+.controls-icons:hover {
+  fill: #ff5533;
+}
