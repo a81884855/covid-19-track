@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactTooltip from "react-tooltip";
 import { Container, Row, Col } from "react-bootstrap";
 import Switch from "./Component/switch";
 import Board from "./caseNumBoard";
@@ -10,7 +9,6 @@ import Nav from "./Layout/Navbar";
 import WorldMapChart from "./WorldMap";
 
 function App() {
-  const [content, setContent] = useState("");
   const [value, setValue] = useState(false);
   return (
     <>
@@ -29,8 +27,7 @@ function App() {
               onColor="#EF476F"
               handleToggle={() => setValue(!value)}
             />
-            <WorldMapChart setTooltipContent={setContent} />
-            <ReactTooltip>{content}</ReactTooltip>
+            <WorldMapChart />
           </Col>
           <Col xs={12} md={4}>
             <Board />
