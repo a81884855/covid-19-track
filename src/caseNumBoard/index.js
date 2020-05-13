@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table } from "react-bootstrap";
+import { abbrev } from "../helper";
 
 const apiUrl = "https://api.covid19api.com/summary";
 // const apiUrl = "http://localhost:4000/";
@@ -10,17 +11,6 @@ const apiUrl = "https://api.covid19api.com/summary";
 const Board = () => {
   const [data, setData] = useState([]);
   const [err, setErr] = useState("");
-
-  const countryName = (country) => {
-    switch (country) {
-      case "United States of America":
-        return "Uninted States";
-      case "Russian Federation":
-        return "Russia";
-      default:
-        return country;
-    }
-  };
 
   useEffect(() => {
     axios
@@ -32,7 +22,8 @@ const Board = () => {
         );
       })
       .catch((error) => {
-        setErr(error);
+        console.log(error, "Error");
+        setErr(error.data);
       });
   }, []);
   return (
@@ -41,7 +32,7 @@ const Board = () => {
     //   padding: 30,
     // }}
     >
-      {err ? (
+      {!err ? (
         <>
           <h4>Total Cases</h4>
           <Table striped borderless hover>
@@ -56,7 +47,7 @@ const Board = () => {
               {data.slice(0, 10).map((row, i) => (
                 <tr key={row.Country}>
                   <td>{i + 1}</td>
-                  <td>{countryName(row.Country)}</td>
+                  <td>{abbrev(row.Country)}</td>
                   <td>{row.TotalConfirmed}</td>
                 </tr>
               ))}
@@ -64,7 +55,7 @@ const Board = () => {
           </Table>
         </>
       ) : (
-        <div>Sorry... Some Error on fetching data</div>
+        <div>Sorry... Some Error on fetching data {err}</div>
       )}
     </div>
   );
