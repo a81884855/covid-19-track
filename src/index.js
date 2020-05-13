@@ -4,11 +4,14 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Provider as WorldMapDataProvider } from "./context/worldMapContext";
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <WorldMapDataProvider>
     <App />
-  </React.StrictMode>,
+  </WorldMapDataProvider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 
