@@ -16,8 +16,8 @@ function App() {
       <Container>
         <Row>
           <Col
-            xs={12}
-            md={8}
+            md={12}
+            lg={8}
             style={{
               padding: "0 20px 0 20px",
             }}
@@ -29,7 +29,7 @@ function App() {
             />
             <WorldMapChart />
           </Col>
-          <Col xs={12} md={4}>
+          <Col md={12} lg={4}>
             <Board />
           </Col>
         </Row>
