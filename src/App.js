@@ -14,12 +14,17 @@ function App() {
     <>
       <Nav />
       <Container>
-        <Row>
+        <Row
+          style={{
+            margin: "0 0 60px 0",
+          }}
+        >
           <Col
             md={12}
             lg={8}
             style={{
               padding: "0 20px 0 20px",
+              marginBottom: 30,
             }}
           >
             <Switch
