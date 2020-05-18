@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 // import axios from "axios";
-import { Table, Spinner, Button } from "react-bootstrap";
+import { Table, Spinner } from "react-bootstrap";
 import { abbrev, rounded } from "../helper";
 import { Context as WorldMapContext } from "../context/worldMapContext";
 
