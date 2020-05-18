@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import Switch from "./Component/switch";
+import { Row, Col } from "react-bootstrap";
 import Board from "./caseNumBoard";
 
 import "./App.css";
@@ -13,32 +12,25 @@ function App() {
   return (
     <>
       <Nav />
-      <Container>
+      <div
+        style={{
+          margin: "0 1rem",
+          padding: "0 1rem",
+        }}
+      >
         <Row
           style={{
             margin: "0 0 60px 0",
           }}
         >
-          <Col
-            md={12}
-            lg={8}
-            style={{
-              padding: "0 20px 0 20px",
-              marginBottom: 30,
-            }}
-          >
-            <Switch
-              isOn={value}
-              onColor="#EF476F"
-              handleToggle={() => setValue(!value)}
-            />
+          <Col md={12} lg={8}>
             <WorldMapChart />
           </Col>
           <Col md={12} lg={4}>
             <Board />
           </Col>
         </Row>
-      </Container>
+      </div>
     </>
   );
 }
