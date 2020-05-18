@@ -1,40 +1,27 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Table } from "react-bootstrap";
-import { abbrev } from "../helper";
-
-const apiUrl = "https://api.covid19api.com/summary";
-// const apiUrl = "http://localhost:4000/";
-// https://api.covid19api.com/summary
-// https://thevirustracker.com/free-api?global=stats
+import React, { useState, useContext } from "react";
+// import axios from "axios";
+import { Table, Spinner, Button } from "react-bootstrap";
+import { abbrev, rounded } from "../helper";
+import { Context as WorldMapContext } from "../context/worldMapContext";
 
 const Board = () => {
-  const [data, setData] = useState([]);
-  const [err, setErr] = useState("");
+  const {
+    state: { caseData },
+    // fetchData,
+  } = useContext(WorldMapContext);
 
-  useEffect(() => {
-    axios
-      .get(`${apiUrl}`)
-      .then((res) => {
-        console.log(res.data);
-        setData(
-          res.data.Countries.sort((x, y) => y.TotalConfirmed - x.TotalConfirmed)
-        );
-      })
-      .catch((error) => {
-        console.log(error, "Error");
-        setErr(error.data);
-      });
-  }, []);
+  const [maxCount, setMaxCount] = useState(20);
+
   return (
-    <div
-    // style={{
-    //   padding: 30,
-    // }}
-    >
-      {!err ? (
-        <>
-          <h4>Total Cases</h4>
+    <>
+      <h4>Total Cases</h4>
+      {!!caseData.length ? (
+        <div
+          style={{
+            height: 470,
+            overflow: "scroll",
+          }}
+        >
           <Table striped borderless hover>
             <thead>
               <tr>
@@ -44,20 +31,51 @@ const Board = () => {
               </tr>
             </thead>
             <tbody>
-              {data.slice(0, 10).map((row, i) => (
-                <tr key={row.Country}>
-                  <td>{i + 1}</td>
-                  <td>{abbrev(row.Country)}</td>
-                  <td>{row.TotalConfirmed}</td>
-                </tr>
-              ))}
+              <tr></tr>
+              {caseData
+                .slice(0, maxCount)
+                .map(({ Country, TotalConfirmed, NewConfirmed }, i) => (
+                  <tr key={Country}>
+                    <td>{i + 1}</td>
+                    <td>{abbrev(Country)}</td>
+                    <td>
+                      {TotalConfirmed}{" "}
+                      <div
+                        style={{
+                          fontSize: "0.6rem",
+                          color: "#427cd2",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {typeof NewConfirmed === "number"
+                          ? ` + ${rounded(NewConfirmed)} new`
+                          : "N/A"}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
-        </>
+          <Button
+            variant="info"
+            onClick={() => setMaxCount(maxCount + 20)}
+            block
+          >
+            More...
+          </Button>
+        </div>
       ) : (
-        <div>Sorry... Some Error on fetching data {err}</div>
+        <div
+          style={{
+            padding: 20,
+          }}
+        >
+          <h3>
+            <Spinner animation="grow" /> Loading...
+          </h3>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
