@@ -24,24 +24,6 @@ const MapCaseNumDisplay = (Global) => {
       </Col>
 
       <Col>
-        Death:
-        {Global.TotalDeaths && (
-          <span className="caseNumDisplay deathCase">
-            {Global.TotalDeaths}
-            <p
-              className="font-weight-bold"
-              style={{
-                fontSize: "0.6rem",
-              }}
-            >
-              {" "}
-              + {Global.NewDeaths} new
-            </p>
-          </span>
-        )}
-      </Col>
-
-      <Col>
         Recovered:
         {Global.TotalRecovered && (
           <span className="caseNumDisplay recoveredCase">
@@ -54,6 +36,24 @@ const MapCaseNumDisplay = (Global) => {
             >
               {" "}
               + {Global.NewRecovered} new
+            </p>
+          </span>
+        )}
+      </Col>
+
+      <Col>
+        Death:
+        {Global.TotalDeaths && (
+          <span className="caseNumDisplay deathCase">
+            {Global.TotalDeaths}
+            <p
+              className="font-weight-bold"
+              style={{
+                fontSize: "0.6rem",
+              }}
+            >
+              {" "}
+              + {Global.NewDeaths} new
             </p>
           </span>
         )}
