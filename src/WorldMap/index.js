@@ -13,7 +13,9 @@ import "./index.css";
 import { rounded, abbrev } from "../helper";
 import { Context as WorldMapContext } from "../context/worldMapContext";
 
-import MapHeadDisplay from "./MapHeadDisplay";
+import MapHeadDisplay from "./statisticsDisplay";
+
+import Tabs from "../Component/Tabs";
 
 const MapChart = () => {
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
@@ -54,143 +56,154 @@ const MapChart = () => {
 
   return (
     <>
-      <ComposableMap
-        data-tip=""
-        projectionConfig={{ scale: 125 }}
-        width={700}
-        height={400}
+      <Tabs />
+      <div
+        style={{
+          border: "1px solid black",
+          borderRadius: "20px",
+          overflow: "auto",
+        }}
       >
-        <ZoomableGroup
-          zoom={position.zoom}
-          center={position.coordinates}
-          onMoveEnd={handleMoveEnd}
+        <ComposableMap
+          data-tip=""
+          projectionConfig={{ scale: 125 }}
+          width={700}
+          height={400}
         >
-          <Sphere />
-          {loading && (
-            <Geographies geography={worldMapData}>
-              {({ geographies }) =>
-                geographies.map((geo) => {
-                  const {
-                    NAME,
-                    NewConfirmed,
-                    TotalConfirmed,
-                    TotalDeaths,
-                    NewDeaths,
-                    TotalRecovered,
-                    NewRecovered,
-                  } = geo.properties;
+          <ZoomableGroup
+            zoom={position.zoom}
+            center={position.coordinates}
+            onMoveEnd={handleMoveEnd}
+          >
+            <Sphere />
+            {loading && (
+              <Geographies geography={worldMapData}>
+                {({ geographies }) =>
+                  geographies.map((geo) => {
+                    const {
+                      NAME,
+                      NewConfirmed,
+                      TotalConfirmed,
+                      TotalDeaths,
+                      NewDeaths,
+                      TotalRecovered,
+                      NewRecovered,
+                    } = geo.properties;
 
-                  return (
-                    <OverlayTrigger
-                      trigger={["focus", "hover", "click"]}
-                      placement="right"
-                      key={geo.rsmKey}
-                      overlay={
-                        <Popover>
-                          <Popover.Title as="h3">{abbrev(NAME)}</Popover.Title>
-                          <PopoverContent>
-                            <div>
-                              <span
-                                style={{
-                                  fontSize: "0.7rem",
-                                }}
-                              >
-                                Total Confirmed:{" "}
-                              </span>
-                              <span className="confirmedCase">
-                                {rounded(TotalConfirmed)}
-                              </span>
-                              <span
-                                className="confirmedCase font-weight-bold"
-                                style={{
-                                  fontSize: "0.6rem",
-                                }}
-                              >
-                                {typeof NewConfirmed === "number"
-                                  ? ` + ${rounded(NewConfirmed)} new`
-                                  : "N/A"}
-                              </span>
-                            </div>
+                    return (
+                      <OverlayTrigger
+                        trigger={["focus", "hover", "click"]}
+                        placement="right"
+                        key={geo.rsmKey}
+                        overlay={
+                          <Popover>
+                            <Popover.Title as="h3">
+                              {abbrev(NAME)}
+                            </Popover.Title>
+                            <PopoverContent>
+                              <div>
+                                <span
+                                  style={{
+                                    fontSize: "0.7rem",
+                                  }}
+                                >
+                                  Total Confirmed:{" "}
+                                </span>
+                                <span className="confirmedCase">
+                                  {rounded(TotalConfirmed)}
+                                </span>
+                                <span
+                                  className="confirmedCase font-weight-bold"
+                                  style={{
+                                    fontSize: "0.6rem",
+                                  }}
+                                >
+                                  {typeof NewConfirmed === "number"
+                                    ? ` + ${rounded(NewConfirmed)} new`
+                                    : "N/A"}
+                                </span>
+                              </div>
 
-                            <div>
-                              <span
-                                style={{
-                                  fontSize: "0.7rem",
-                                }}
-                              >
-                                Total Deaths:{" "}
-                              </span>
-                              <span className="deathCase">
-                                {rounded(TotalDeaths)}
-                              </span>
-                              <span
-                                className="deathCase font-weight-bold"
-                                style={{
-                                  fontSize: "0.6rem",
-                                }}
-                              >
-                                {typeof NewDeaths === "number"
-                                  ? ` + ${rounded(NewDeaths)} new`
-                                  : "N/A"}
-                              </span>
-                            </div>
+                              <div>
+                                <span
+                                  style={{
+                                    fontSize: "0.7rem",
+                                  }}
+                                >
+                                  Total Deaths:{" "}
+                                </span>
+                                <span className="deathCase">
+                                  {rounded(TotalDeaths)}
+                                </span>
+                                <span
+                                  className="deathCase font-weight-bold"
+                                  style={{
+                                    fontSize: "0.6rem",
+                                  }}
+                                >
+                                  {typeof NewDeaths === "number"
+                                    ? ` + ${rounded(NewDeaths)} new`
+                                    : "N/A"}
+                                </span>
+                              </div>
 
-                            <div>
-                              <span
-                                style={{
-                                  fontSize: "0.7rem",
-                                }}
-                              >
-                                Total Recovered:{" "}
-                              </span>
-                              <span className="recoveredCase">
-                                {rounded(TotalRecovered)}
-                              </span>
-                              <span
-                                className="recoveredCase font-weight-bold"
-                                style={{
-                                  fontSize: "0.6rem",
-                                }}
-                              >
-                                {typeof NewRecovered === "number"
-                                  ? ` + ${rounded(NewRecovered)} new`
-                                  : "N/A"}
-                              </span>
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                      }
-                    >
-                      <Geography
-                        geography={geo}
-                        style={{
-                          default: {
-                            fill: "#D6D6DA",
-                            outline: "none",
-                          },
-                          hover: {
-                            fill: "#F53",
-                            outline: "none",
-                          },
-                          pressed: {
-                            fill: "#E42",
-                            outline: "none",
-                          },
-                        }}
-                      />
-                    </OverlayTrigger>
-                  );
-                })
-              }
-            </Geographies>
-          )}
-        </ZoomableGroup>
-      </ComposableMap>
-      <div className="controls">
-        <FaPlusCircle className="controls-icons" onClick={handleZoomIn} />
-        <FaMinusCircle className="controls-icons" onClick={handleZoomOut} />
+                              <div>
+                                <span
+                                  style={{
+                                    fontSize: "0.7rem",
+                                  }}
+                                >
+                                  Total Recovered:{" "}
+                                </span>
+                                <span className="recoveredCase">
+                                  {rounded(TotalRecovered)}
+                                </span>
+                                <span
+                                  className="recoveredCase font-weight-bold"
+                                  style={{
+                                    fontSize: "0.6rem",
+                                  }}
+                                >
+                                  {typeof NewRecovered === "number"
+                                    ? ` + ${rounded(NewRecovered)} new`
+                                    : "N/A"}
+                                </span>
+                              </div>
+                            </PopoverContent>
+                          </Popover>
+                        }
+                      >
+                        <Geography
+                          geography={geo}
+                          style={{
+                            default: {
+                              fill: "#D6D6DA",
+                              outline: "none",
+                            },
+                            hover: {
+                              fill: "#F53",
+                              outline: "none",
+                            },
+                            pressed: {
+                              fill: "#E42",
+                              outline: "none",
+                            },
+                          }}
+                        />
+                      </OverlayTrigger>
+                    );
+                  })
+                }
+              </Geographies>
+            )}
+          </ZoomableGroup>
+        </ComposableMap>
+        <div className="controls">
+          <FaPlusCircle className="controls-icons" onClick={handleZoomIn} />
+          <FaMinusCircle className="controls-icons" onClick={handleZoomOut} />
+        </div>
+        {MapHeadDisplay(Global)}
       </div>
-      {MapHeadDisplay(Global)}
     </>
   );
 };

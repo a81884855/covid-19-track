@@ -1,0 +1,20 @@
+.tabs {
+  padding-left: 9px;
+  display: flex;
+  font-size: 0.98rem;
+  color: gray;
+}
+
+.tabs .tab {
+  cursor: pointer;
+  padding: 8px;
+}
+
+.tabs .active {
+  color: black;
+  border: 1px solid lightgrey;
+  border-bottom: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  font-weight: bold;
+}
