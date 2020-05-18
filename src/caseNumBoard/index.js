@@ -1,4 +1,4 @@
-import React, { useState, useContext, lazy, Suspense } from "react";
+import React, { useState, useContext } from "react";
 // import axios from "axios";
 import { Table, Spinner, Button } from "react-bootstrap";
 import { abbrev, rounded } from "../helper";
@@ -7,17 +7,17 @@ import { Context as WorldMapContext } from "../context/worldMapContext";
 const Board = () => {
   const {
     state: { caseData },
-    // fetchData,
   } = useContext(WorldMapContext);
 
   const [maxCount, setMaxCount] = useState(20);
 
   return (
     <>
-      <h4>Total Cases</h4>
+      <h3>World Statistics</h3>
       {!!caseData.length ? (
         <div
           style={{
+            marginTop: 20,
             height: 470,
             overflow: "scroll",
           }}
@@ -26,14 +26,19 @@ const Board = () => {
               setMaxCount(maxCount + 20);
           }}
         >
-          <Table striped borderless hover>
-            <thead>
+          <Table borderless hover>
+            <thead
+              style={{
+                background: "black",
+                color: "white",
+              }}
+            >
               <tr>
                 <th>#</th>
                 <th>Country</th>
                 <th>Case #</th>
-                <th>Death</th>
-                <th>Recovered</th>
+                {/* <th>Death</th>
+                <th>Recovered</th> */}
               </tr>
             </thead>
             <tbody>
@@ -69,7 +74,8 @@ const Board = () => {
                             : "N/A"}
                         </div>
                       </td>
-                      <td className="deathCase">
+
+                      {/* <td className="deathCase">
                         {TotalDeaths}{" "}
                         <div
                           className="font-weight-bold"
@@ -82,6 +88,7 @@ const Board = () => {
                             : "N/A"}
                         </div>
                       </td>
+
                       <td className="recoveredCase">
                         {TotalRecovered}{" "}
                         <div
@@ -94,20 +101,12 @@ const Board = () => {
                             ? ` + ${rounded(NewRecovered)} new`
                             : "N/A"}
                         </div>
-                      </td>
+                      </td> */}
                     </tr>
                   )
                 )}
             </tbody>
           </Table>
-          <Suspense fallback={<h1>Loading…</h1>}></Suspense>
-          {/* <Button
-            variant="info"
-            onClick={() => setMaxCount(maxCount + 20)}
-            block
-          >
-            More...
-          </Button> */}
         </div>
       ) : (
         <div
