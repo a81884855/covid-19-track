@@ -4,11 +4,14 @@ import { Row, Col } from "react-bootstrap";
 
 const MapCaseNumDisplay = (Global) => {
   return (
-    <Row className="mt-3">
-      <Col>
-        Confimed:
-        {Global.TotalConfirmed && (
-          <span className="caseNumDisplay confirmedCase">
+    <Row
+      style={{
+        padding: "0 15px 0 15px",
+      }}
+    >
+      {Global.TotalConfirmed && (
+        <Col className="caseDisplayContainer confirmedCaseBackground">
+          <span>
             {Global.TotalConfirmed}
             <p
               className="font-weight-bold"
@@ -20,13 +23,13 @@ const MapCaseNumDisplay = (Global) => {
               + {Global.NewConfirmed} new
             </p>
           </span>
-        )}
-      </Col>
+          <h5>Confirmed</h5>
+        </Col>
+      )}
 
-      <Col>
-        Recovered:
-        {Global.TotalRecovered && (
-          <span className="caseNumDisplay recoveredCase">
+      {Global.TotalRecovered && (
+        <Col className="caseDisplayContainer recoveredCaseBackground">
+          <span>
             {Global.TotalRecovered}
             <p
               className="font-weight-bold"
@@ -38,13 +41,13 @@ const MapCaseNumDisplay = (Global) => {
               + {Global.NewRecovered} new
             </p>
           </span>
-        )}
-      </Col>
+          <h5>Recovered</h5>
+        </Col>
+      )}
 
-      <Col>
-        Death:
-        {Global.TotalDeaths && (
-          <span className="caseNumDisplay deathCase">
+      {Global.TotalDeaths && (
+        <Col className="caseDisplayContainer deathCaseBackground">
+          <span>
             {Global.TotalDeaths}
             <p
               className="font-weight-bold"
@@ -56,8 +59,9 @@ const MapCaseNumDisplay = (Global) => {
               + {Global.NewDeaths} new
             </p>
           </span>
-        )}
-      </Col>
+          <h5>Death</h5>
+        </Col>
+      )}
     </Row>
   );
 };
