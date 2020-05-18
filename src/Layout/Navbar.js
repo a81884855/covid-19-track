@@ -5,7 +5,7 @@ const Nav = () => {
   return (
     <Navbar
       style={{
-        paddingBottom: 0,
+        padding: "0 0 0 2rem",
       }}
     >
       <Navbar.Brand href="/">
