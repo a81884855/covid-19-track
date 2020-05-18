@@ -13,3 +13,20 @@
 .controls-icons:hover {
   fill: #ff5533;
 }
+
+.caseNumDisplay {
+  display: inline-grid;
+  margin-left: 10px;
+}
+
+.confirmedCase {
+  color: #427cd2;
+}
+
+.deathCase {
+  color: #c74333;
+}
+
+.recoveredCase {
+  color: #95c183;
+}

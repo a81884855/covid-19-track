@@ -13,20 +13,25 @@ import "./index.css";
 import { rounded, abbrev } from "../helper";
 import { Context as WorldMapContext } from "../context/worldMapContext";
 
-// const geoUrl = "http://localhost:4000/";
+import MapHeadDisplay from "./MapHeadDisplay";
 
 const MapChart = () => {
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
-  const { state, fetchData } = useContext(WorldMapContext);
+  const {
+    state: { worldMapData, Global },
+    addData,
+    fetchData,
+  } = useContext(WorldMapContext);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let fetch = async () => {
       try {
-        await fetchData();
+        let data = await fetchData();
+        await addData(data);
         setLoading(true);
       } catch (err) {
-        console.log(console.error);
+        console.log(err);
       }
     };
 
@@ -62,7 +67,7 @@ const MapChart = () => {
         >
           <Sphere />
           {loading && (
-            <Geographies geography={state}>
+            <Geographies geography={worldMapData}>
               {({ geographies }) =>
                 geographies.map((geo) => {
                   const {
@@ -77,7 +82,7 @@ const MapChart = () => {
 
                   return (
                     <OverlayTrigger
-                      trigger={["focus", "hover"]}
+                      trigger={["focus", "hover", "click"]}
                       placement="right"
                       key={geo.rsmKey}
                       overlay={
@@ -92,18 +97,13 @@ const MapChart = () => {
                               >
                                 Total Confirmed:{" "}
                               </span>
-                              <span
-                                style={{
-                                  color: "#427cd2",
-                                }}
-                              >
+                              <span className="confirmedCase">
                                 {rounded(TotalConfirmed)}
                               </span>
                               <span
+                                className="confirmedCase font-weight-bold"
                                 style={{
                                   fontSize: "0.6rem",
-                                  color: "#427cd2",
-                                  fontWeight: "bold",
                                 }}
                               >
                                 {typeof NewConfirmed === "number"
@@ -120,18 +120,13 @@ const MapChart = () => {
                               >
                                 Total Deaths:{" "}
                               </span>
-                              <span
-                                style={{
-                                  color: "#c74333",
-                                }}
-                              >
+                              <span className="deathCase">
                                 {rounded(TotalDeaths)}
                               </span>
                               <span
+                                className="deathCase font-weight-bold"
                                 style={{
                                   fontSize: "0.6rem",
-                                  color: "#c74333",
-                                  fontWeight: "bold",
                                 }}
                               >
                                 {typeof NewDeaths === "number"
@@ -148,18 +143,13 @@ const MapChart = () => {
                               >
                                 Total Recovered:{" "}
                               </span>
-                              <span
-                                style={{
-                                  color: "#95c183",
-                                }}
-                              >
+                              <span className="recoveredCase">
                                 {rounded(TotalRecovered)}
                               </span>
                               <span
+                                className="recoveredCase font-weight-bold"
                                 style={{
                                   fontSize: "0.6rem",
-                                  color: "#95c183",
-                                  fontWeight: "bold",
                                 }}
                               >
                                 {typeof NewRecovered === "number"
@@ -200,6 +190,7 @@ const MapChart = () => {
         <FaPlusCircle className="controls-icons" onClick={handleZoomIn} />
         <FaMinusCircle className="controls-icons" onClick={handleZoomOut} />
       </div>
+      {MapHeadDisplay(Global)}
     </>
   );
 };
