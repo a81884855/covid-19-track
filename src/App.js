@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
 import Board from "./caseNumBoard";
 
@@ -8,7 +8,6 @@ import Nav from "./Layout/Navbar";
 import WorldMapChart from "./WorldMap";
 
 function App() {
-  const [value, setValue] = useState(false);
   return (
     <>
       <Nav />
