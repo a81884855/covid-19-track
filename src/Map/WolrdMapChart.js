@@ -12,7 +12,11 @@ import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
 
 import { rounded, abbrev, colorPick, colorCalculate } from "../helper";
 
-export const WolrdMapChart = (worldMapData, GlobalTotalConfirmed, loading) => {
+export const WolrdMapChart = ({
+  worldMapData,
+  GlobalTotalConfirmed,
+  loading,
+}) => {
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
 
   const handleZoomIn = () => {
@@ -33,8 +37,8 @@ export const WolrdMapChart = (worldMapData, GlobalTotalConfirmed, loading) => {
     <>
       <ComposableMap
         projectionConfig={{ scale: 125, rotation: [-11, 0, 0] }}
-        width={700}
-        height={400}
+        width={750}
+        height={450}
       >
         <ZoomableGroup
           zoom={position.zoom}
@@ -147,7 +151,6 @@ export const WolrdMapChart = (worldMapData, GlobalTotalConfirmed, loading) => {
                                 TotalConfirmed
                               )
                             )}`,
-                            // fill: "#D6D6DA",
                             stroke: "#adb5bd",
                             strokeWidth: 0.75,
                             outline: "none",
