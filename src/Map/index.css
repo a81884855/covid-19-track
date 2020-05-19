@@ -1,0 +1,49 @@
+.controls {
+  font-size: xx-large;
+  float: right;
+  position: absolute;
+  margin-top: -76px;
+  right: 40px;
+}
+
+.controls-icons {
+  margin: 5px;
+}
+
+.controls-icons:hover {
+  fill: #ff5533;
+}
+
+.caseDisplayContainer {
+  color: white;
+  text-align: center;
+  padding-top: 12px;
+}
+
+.confirmedCaseBackground {
+  background: #39f;
+}
+
+.deathCaseBackground {
+  background: #e55353;
+}
+
+.recoveredCaseBackground {
+  background: #2eb85c;
+}
+
+.confirmedCase {
+  color: #427cd2;
+}
+
+.deathCase {
+  color: #c74333;
+}
+
+.recoveredCase {
+  color: #2eb85c;
+}
+
+p {
+  margin-bottom: 0.5rem !important;
+}
