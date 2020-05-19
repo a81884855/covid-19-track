@@ -18,7 +18,7 @@ const Board = () => {
         <div
           style={{
             marginTop: 20,
-            height: 470,
+            height: 600,
             overflow: "scroll",
           }}
           onScroll={(e) => {
