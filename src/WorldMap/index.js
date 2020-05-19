@@ -4,13 +4,13 @@ import {
   ComposableMap,
   Geographies,
   Geography,
-  Sphere,
+  Graticule,
 } from "react-simple-maps";
 
 import { OverlayTrigger, Popover, PopoverContent } from "react-bootstrap";
 import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
 import "./index.css";
-import { rounded, abbrev } from "../helper";
+import { rounded, abbrev, colorPick } from "../helper";
 import { Context as WorldMapContext } from "../context/worldMapContext";
 
 import MapHeadDisplay from "./statisticsDisplay";
@@ -74,10 +74,10 @@ const MapChart = () => {
             center={position.coordinates}
             onMoveEnd={handleMoveEnd}
           >
-            <Sphere />
+            <Graticule stroke="#eeeeee" />
             {loading && (
               <Geographies geography={worldMapData}>
-                {({ geographies, projection }) =>
+                {({ geographies }) =>
                   geographies.map((geo) => {
                     const {
                       NAME,
@@ -174,10 +174,14 @@ const MapChart = () => {
                       >
                         <Geography
                           geography={geo}
-                          projection={projection}
                           style={{
                             default: {
-                              fill: "#D6D6DA",
+                              fill: `${colorPick(
+                                Math.floor(
+                                  Global.TotalConfirmed / TotalConfirmed / 3
+                                )
+                              )}`,
+                              // fill: "#D6D6DA",
                               stroke: "#adb5bd",
                               strokeWidth: 0.75,
                               outline: "none",
