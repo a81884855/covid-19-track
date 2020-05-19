@@ -65,8 +65,7 @@ const MapChart = () => {
         }}
       >
         <ComposableMap
-          data-tip=""
-          projectionConfig={{ scale: 125 }}
+          projectionConfig={{ scale: 125, rotation: [-11, 0, 0] }}
           width={700}
           height={400}
         >
@@ -78,7 +77,7 @@ const MapChart = () => {
             <Sphere />
             {loading && (
               <Geographies geography={worldMapData}>
-                {({ geographies }) =>
+                {({ geographies, projection }) =>
                   geographies.map((geo) => {
                     const {
                       NAME,
@@ -175,17 +174,24 @@ const MapChart = () => {
                       >
                         <Geography
                           geography={geo}
+                          projection={projection}
                           style={{
                             default: {
                               fill: "#D6D6DA",
+                              stroke: "#adb5bd",
+                              strokeWidth: 0.75,
                               outline: "none",
                             },
                             hover: {
                               fill: "#F53",
+                              stroke: "#adb5bd",
+                              strokeWidth: 0.75,
                               outline: "none",
                             },
                             pressed: {
                               fill: "#E42",
+                              stroke: "#adb5bd",
+                              strokeWidth: 0.75,
                               outline: "none",
                             },
                           }}
