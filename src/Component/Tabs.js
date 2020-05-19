@@ -10,6 +10,7 @@ const Tabs = () => {
       {tabs.map((tab) => (
         <div
           className={`tab ${target === tab ? "active" : ""}`}
+          key={tab}
           onClick={() => setTarget(tab)}
         >
           {tab}
