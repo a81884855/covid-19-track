@@ -6,15 +6,19 @@ import { Context as WorldMapContext } from "../context/worldMapContext";
 import MapHeadDisplay from "./statisticsDisplay";
 
 import WorldMapChart from "./WolrdMapChart";
+import USMapChart from "./USMapChart";
+
 import Tabs from "../Component/Tabs";
 
 const MapChart = () => {
+  const [loading, setLoading] = useState(false);
+  const [map, setMap] = useState("World");
+
   const {
     state: { worldMapData, Global },
     addData,
     fetchData,
   } = useContext(WorldMapContext);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let fetch = async () => {
@@ -30,9 +34,33 @@ const MapChart = () => {
     fetch();
   }, []);
 
+  const mapSwitch = (map) => {
+    switch (map) {
+      case "World":
+        return (
+          <WorldMapChart
+            loading={loading}
+            worldMapData={worldMapData}
+            GlobalTotalConfirmed={Global.TotalConfirmed}
+          />
+        );
+      case "United States":
+        return <USMapChart />;
+      default:
+        return (
+          <WorldMapChart
+            loading={loading}
+            worldMapData={worldMapData}
+            GlobalTotalConfirmed={Global.TotalConfirmed}
+          />
+        );
+    }
+  };
+
+  console.log(map);
   return (
     <>
-      <Tabs />
+      <Tabs setMap={setMap} />
       <div
         style={{
           border: "1px solid black",
@@ -40,7 +68,7 @@ const MapChart = () => {
           overflow: "auto",
         }}
       >
-        {WorldMapChart(worldMapData, Global.TotalConfirmed, loading)}
+        {mapSwitch(map)}
         {MapHeadDisplay(Global)}
       </div>
     </>

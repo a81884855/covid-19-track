@@ -3,7 +3,7 @@ import "./Tabs.css";
 
 const tabs = ["World", "United States", "European"];
 
-const Tabs = () => {
+const Tabs = ({ setMap }) => {
   const [target, setTarget] = useState("World");
   return (
     <div className="tabs">
@@ -11,7 +11,10 @@ const Tabs = () => {
         <div
           className={`tab ${target === tab ? "active" : ""}`}
           key={tab}
-          onClick={() => setTarget(tab)}
+          onClick={() => {
+            setMap(tab);
+            setTarget(tab);
+          }}
         >
           {tab}
         </div>
