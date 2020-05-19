@@ -22,6 +22,22 @@ module.exports = {
     }
   },
 
+  colorCalculate: (GlobalTotalConfirmed, TotalConfirmed) => {
+    if (!TotalConfirmed) return 50;
+    let percent = Math.floor(GlobalTotalConfirmed / TotalConfirmed);
+    if (percent > 10000) {
+      return 44 + Math.floor(GlobalTotalConfirmed / TotalConfirmed / 4000);
+    } else if (percent > 1000) {
+      return 33 + Math.floor(GlobalTotalConfirmed / TotalConfirmed / 400);
+    } else if (percent > 100) {
+      return 22 + Math.floor(GlobalTotalConfirmed / TotalConfirmed / 50);
+    } else if (percent > 10) {
+      return 11 + Math.floor(GlobalTotalConfirmed / TotalConfirmed / 5);
+    } else {
+      return Math.floor(GlobalTotalConfirmed / TotalConfirmed / 3);
+    }
+  },
+
   colorPick: (num) => {
     let colorSet = [
       "#710022",
@@ -76,7 +92,8 @@ module.exports = {
       "#f5f5f5",
       "#f0f0f0",
     ];
-    if (!num || num > colorSet.length - 1) num = colorSet.length - 1;
+    if (!num || num > colorSet.length - 1) return colorSet[colorSet.length - 1];
+
     return colorSet[num];
   },
 };
