@@ -5,7 +5,7 @@ import Board from "./caseNumBoard";
 import "./App.css";
 
 import Nav from "./Layout/Navbar";
-import WorldMapChart from "./WorldMap";
+import MapChart from "./Map";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
           }}
         >
           <Col md={12} lg={8}>
-            <WorldMapChart />
+            <MapChart />
           </Col>
           <Col md={12} lg={4}>
             <Board />
