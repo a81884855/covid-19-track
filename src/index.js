@@ -5,11 +5,13 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider as WorldMapDataProvider } from "./context/worldMapContext";
-
+import { Provider as USMapDataProvider } from "./context/USMapContext";
 ReactDOM.render(
   // <React.StrictMode>
   <WorldMapDataProvider>
-    <App />
+    <USMapDataProvider>
+      <App />
+    </USMapDataProvider>
   </WorldMapDataProvider>,
   // </React.StrictMode>,
   document.getElementById("root")
