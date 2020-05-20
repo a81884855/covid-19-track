@@ -42,7 +42,7 @@ const Board = () => {
             >
               <tr>
                 <th>#</th>
-                <th>Country</th>
+                <th>Location</th>
                 <th>Case #</th>
                 {/* <th>Death</th>
                 <th>Recovered</th> */}
