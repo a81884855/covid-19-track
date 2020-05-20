@@ -20,6 +20,11 @@
   padding-top: 12px;
 }
 
+.caseDisplayContainer span {
+  font-size: larger;
+  font-weight: bold;
+}
+
 .confirmedCaseBackground {
   background: #39f;
 }
@@ -30,6 +35,10 @@
 
 .recoveredCaseBackground {
   background: #2eb85c;
+}
+
+.testCaseBackground {
+  background: #f7b924;
 }
 
 .confirmedCase {
