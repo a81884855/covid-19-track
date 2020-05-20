@@ -28,7 +28,8 @@ const MapChart = () => {
           </div>
         );
       default:
-        return <WorldMapChart />;
+        return null;
+      // return <WorldMapChart />;
     }
   };
 
