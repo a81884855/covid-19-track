@@ -4,16 +4,12 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Provider as WorldMapDataProvider } from "./context/worldMapContext";
-import { Provider as USMapDataProvider } from "./context/USMapContext";
+// import { Provider as WorldMapDataProvider } from "./context/worldMapContext";
+import { Provider as MapDataProvider } from "./context/MapContext";
 ReactDOM.render(
-  // <React.StrictMode>
-  <WorldMapDataProvider>
-    <USMapDataProvider>
-      <App />
-    </USMapDataProvider>
-  </WorldMapDataProvider>,
-  // </React.StrictMode>,
+  <MapDataProvider>
+    <App />
+  </MapDataProvider>,
   document.getElementById("root")
 );
 
