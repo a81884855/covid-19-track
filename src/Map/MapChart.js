@@ -44,7 +44,7 @@ const MapChart = () => {
       >
         {mapDisplay(map)}
       </div>
-      {SourceDisplay(map)}
+      <SourceDisplay map={map} />
     </>
   );
 };
