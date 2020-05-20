@@ -10,7 +10,7 @@ const trackReducer = (state, action) => {
     case "fetch_US_data":
       return {
         ...state,
-        US_Case_Data: action.playload[0],
+        caseData: action.playload[0],
         mapSummaryData: action.playload[1],
         loading: true,
       };
@@ -70,10 +70,12 @@ const addWorldData = (dispatch) => async (state) => {
 };
 
 const fetchUSData = (dispatch) => async () => {
-  let caseData, fetch_summary_Data;
+  let fetch_case_data, fetch_summary_Data;
 
   try {
-    caseData = await axios.get("https://corona.lmao.ninja/v2/states?sort");
+    fetch_case_data = await axios.get(
+      "https://corona.lmao.ninja/v2/states?sort"
+    );
     fetch_summary_Data = await axios.get(
       "https://corona.lmao.ninja/v2/countries/usa"
     );
@@ -91,7 +93,6 @@ const fetchUSData = (dispatch) => async () => {
     testsPerOneMillion,
   } = fetch_summary_Data.data;
 
-  console.log(fetch_summary_Data.data, "fetch_summary_Data");
   const summaryData = {
     TotalConfirmed: cases,
     NewConfirmed: todayCases,
@@ -103,14 +104,21 @@ const fetchUSData = (dispatch) => async () => {
     TestsPerOneMillion: testsPerOneMillion,
   };
 
-  console.log(summaryData, "summaryData");
+  let caseData = [];
+  for (let data of fetch_case_data.data) {
+    caseData.push({
+      Country: data.state,
+      TotalConfirmed: data.cases,
+      NewConfirmed: data.todayCases,
+    });
+  }
 
   dispatch({
     type: "fetch_US_data",
-    playload: [caseData.data, summaryData],
+    playload: [caseData, summaryData],
   });
 
-  return caseData.data;
+  return fetch_case_data.data;
 };
 
 const addUSData = (dispatch) => async (state) => {
@@ -137,9 +145,8 @@ export const { Provider, Context } = createDataContext(
   { addUSData, fetchUSData, fetchWorldData, addWorldData },
   {
     mapSummaryData: {},
-    US_Case_Data: [],
+    caseData: [],
     USMapData: USRawData,
-    World_Case_Data: [],
     worldMapData: WorldRawData,
     loading: true,
   }
