@@ -7,8 +7,8 @@ export const MapLoading = () => {
       style={{
         width: "100%",
         textAlign: "center",
-        paddingTop: "40%",
-        height: 600,
+        paddingTop: "30%",
+        height: 550,
       }}
     >
       <h3>
