@@ -1,28 +1,35 @@
 import React, { useState, useContext } from "react";
 // import axios from "axios";
-import { Table, Spinner } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { abbrev, rounded } from "../helper";
-import { Context as WorldMapContext } from "../context/worldMapContext";
+import { Context as MapContext } from "../context/MapContext";
+import { MapLoading } from "../Component/MapLoading";
 
 const Board = () => {
   const {
     state: { caseData },
-  } = useContext(WorldMapContext);
+  } = useContext(MapContext);
 
   const [maxCount, setMaxCount] = useState(20);
 
   return (
-    <>
-      <h3>World Statistics</h3>
+    <div
+      style={{
+        border: "1px solid black",
+        marginTop: 50,
+        borderRadius: 20,
+        overflow: "hidden",
+      }}
+    >
+      {/* <h3>World Statistics</h3> */}
       {!!caseData.length ? (
         <div
           style={{
-            marginTop: 20,
-            height: 600,
             overflow: "scroll",
+            height: 700,
           }}
           onScroll={(e) => {
-            if (e.target.scrollHeight - e.target.scrollTop === 470)
+            if (e.target.scrollHeight - e.target.scrollTop === 700)
               setMaxCount(maxCount + 20);
           }}
         >
@@ -58,13 +65,12 @@ const Board = () => {
                     },
                     i
                   ) => (
-                    <tr key={Country}>
+                    <tr className="font-weight-bold" key={Country}>
                       <td>{i + 1}</td>
                       <td>{abbrev(Country)}</td>
                       <td className="confirmedCase">
                         {TotalConfirmed}{" "}
                         <div
-                          className="font-weight-bold"
                           style={{
                             fontSize: "0.6rem",
                           }}
@@ -109,17 +115,9 @@ const Board = () => {
           </Table>
         </div>
       ) : (
-        <div
-          style={{
-            padding: 20,
-          }}
-        >
-          <h3>
-            <Spinner animation="grow" /> Loading...
-          </h3>
-        </div>
+        <MapLoading />
       )}
-    </>
+    </div>
   );
 };
 
