@@ -1,6 +1,4 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
-import Board from "./caseNumBoard";
 
 import "./App.css";
 
@@ -11,25 +9,7 @@ function App() {
   return (
     <>
       <Nav />
-      <div
-        style={{
-          margin: "0 1rem",
-          padding: "0 1rem",
-        }}
-      >
-        <Row
-          style={{
-            margin: "0 0 60px 0",
-          }}
-        >
-          <Col md={12} lg={8}>
-            <MapChart />
-          </Col>
-          <Col md={12} lg={4}>
-            <Board />
-          </Col>
-        </Row>
-      </div>
+      <MapChart />
     </>
   );
 }
