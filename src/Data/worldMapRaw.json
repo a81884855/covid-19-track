@@ -9990,7 +9990,7 @@
           "arcs": [[121, 122, 123, 124, 125, 126]],
           "type": "Polygon",
           "properties": {
-            "NAME": "Central African Rep.",
+            "NAME": "Central African Republic",
             "NAME_LONG": "Central African Republic",
             "ABBREV": "C.A.R.",
             "FORMAL_EN": "Central African Republic",
@@ -10325,7 +10325,7 @@
           "arcs": [[-53, 218, 219, 220]],
           "type": "Polygon",
           "properties": {
-            "NAME": "Czechia",
+            "NAME": "Czech Republic",
             "NAME_LONG": "Czech Republic",
             "ABBREV": "Cz.",
             "FORMAL_EN": "Czech Republic",
@@ -10789,7 +10789,7 @@
           "arcs": [[-191, -283, 301]],
           "type": "Polygon",
           "properties": {
-            "NAME": "Eq. Guinea",
+            "NAME": "Equatorial Guinea",
             "NAME_LONG": "Equatorial Guinea",
             "ABBREV": "Eq. G.",
             "FORMAL_EN": "Republic of Equatorial Guinea",
@@ -12191,7 +12191,7 @@
           "arcs": [[-369, -378]],
           "type": "Polygon",
           "properties": {
-            "NAME": "Palestine Territory",
+            "NAME": "Palestinian Territory",
             "NAME_LONG": "Palestine",
             "ABBREV": "Pal.",
             "FORMAL_EN": "West Bank and Gaza",
@@ -12326,7 +12326,7 @@
           "arcs": [[-239, -453, 532, -426]],
           "type": "Polygon",
           "properties": {
-            "NAME": "W. Sahara",
+            "NAME": "Western Sahara",
             "NAME_LONG": "Western Sahara",
             "ABBREV": "W. Sah.",
             "FORMAL_EN": "Sahrawi Arab Democratic Republic",
@@ -12486,7 +12486,7 @@
           "arcs": [[-230, 550, 551, -262]],
           "type": "Polygon",
           "properties": {
-            "NAME": "Somaliland",
+            "NAME": "Somalia",
             "NAME_LONG": "Somaliland",
             "ABBREV": "Solnd.",
             "FORMAL_EN": "Republic of Somaliland",
