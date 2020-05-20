@@ -1,5 +1,5 @@
 .tabs {
-  padding-left: 9px;
+  padding-left: 5px;
   display: flex;
   font-size: 0.98rem;
   color: gray;
@@ -8,13 +8,15 @@
 .tabs .tab {
   cursor: pointer;
   padding: 10px;
-}
-
-.tabs .active {
-  color: black;
+  background: whitesmoke;
   border: 1px solid lightgrey;
   border-bottom: none;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+}
+
+.tabs .active {
+  color: black;
   font-weight: bold;
+  background: sandybrown;
 }
