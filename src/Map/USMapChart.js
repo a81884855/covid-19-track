@@ -31,31 +31,27 @@ const offsets = {
 };
 
 const USMapChart = () => {
-  const [loading, setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   const {
     state: { USMapData, mapSummaryData },
-    addUSData,
     fetchUSData,
   } = useContext(MapContext);
 
   useEffect(() => {
     let fetch = async () => {
       try {
-        let data = await fetchUSData();
-        await addUSData(data);
-        setLoading(true);
+        await fetchUSData();
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
     };
-
     fetch();
   }, []);
 
   return (
     <>
-      {loading ? (
+      {!loading ? (
         <>
           <ComposableMap
             projectionConfig={{ scale: 900 }}
@@ -63,169 +59,168 @@ const USMapChart = () => {
             height={500}
             projection="geoAlbersUsa"
           >
-            {loading && (
-              <Geographies geography={USMapData}>
-                {({ geographies }) => (
-                  <>
-                    {geographies.map((geo) => {
-                      const {
-                        name,
-                        cases,
-                        todayCases,
-                        deaths,
-                        todayDeaths,
-                        tests,
-                      } = geo.properties;
+            <Geographies geography={USMapData}>
+              {({ geographies }) => (
+                <>
+                  {geographies.map((geo) => {
+                    const {
+                      name,
+                      cases,
+                      todayCases,
+                      deaths,
+                      todayDeaths,
+                      tests,
+                    } = geo.properties;
 
-                      return (
-                        <OverlayTrigger
-                          trigger={["focus", "hover", "click"]}
-                          placement="right"
-                          key={geo.rsmKey}
-                          overlay={
-                            <Popover>
-                              <Popover.Title as="h4">{name}</Popover.Title>
-                              <PopoverContent>
-                                <div>
-                                  <span
-                                    style={{
-                                      fontSize: "0.7rem",
-                                    }}
-                                  >
-                                    Total Confirmed:{" "}
-                                  </span>
-                                  <span className="confirmedCase">
-                                    {rounded(cases)}
-                                  </span>
-                                  <span
-                                    className="confirmedCase font-weight-bold"
-                                    style={{
-                                      fontSize: "0.6rem",
-                                    }}
-                                  >
-                                    {typeof todayCases === "number"
-                                      ? ` + ${rounded(todayCases)} new`
-                                      : "N/A"}
-                                  </span>
-                                </div>
-
-                                <div>
-                                  <span
-                                    style={{
-                                      fontSize: "0.7rem",
-                                    }}
-                                  >
-                                    Total Deaths:{" "}
-                                  </span>
-                                  <span className="deathCase">
-                                    {rounded(deaths)}
-                                  </span>
-                                  <span
-                                    className="deathCase font-weight-bold"
-                                    style={{
-                                      fontSize: "0.6rem",
-                                    }}
-                                  >
-                                    {typeof todayDeaths === "number"
-                                      ? ` + ${rounded(todayDeaths)} new`
-                                      : "N/A"}
-                                  </span>
-                                </div>
-
-                                <div>
-                                  <span
-                                    style={{
-                                      fontSize: "0.7rem",
-                                    }}
-                                  >
-                                    Total Tests:{" "}
-                                  </span>
-                                  <span className="recoveredCase">
-                                    {rounded(tests)}
-                                  </span>
-                                </div>
-                              </PopoverContent>
-                            </Popover>
-                          }
-                        >
-                          <Geography
-                            key={geo.rsmKey}
-                            stroke="#FFF"
-                            geography={geo}
-                            // fill="#DDD"
-                            style={{
-                              default: {
-                                fill: `${colorPick(
-                                  colorCalculate(
-                                    mapSummaryData.TotalConfirmed,
-                                    cases
-                                  )
-                                )}`,
-                                stroke: "#adb5bd",
-                                strokeWidth: 0.75,
-                                outline: "none",
-                              },
-                              hover: {
-                                fill: "#F53",
-                                stroke: "#adb5bd",
-                                strokeWidth: 0.75,
-                                outline: "none",
-                              },
-                              pressed: {
-                                fill: "#E42",
-                                stroke: "#adb5bd",
-                                strokeWidth: 0.75,
-                                outline: "none",
-                              },
-                            }}
-                          />
-                        </OverlayTrigger>
-                      );
-                    })}
-
-                    {geographies.map((geo) => {
-                      const centroid = geoCentroid(geo);
-                      const cur = allStates.find((s) => s.val === geo.id);
-                      return (
-                        <g key={geo.rsmKey + "-name"}>
-                          {cur &&
-                            centroid[0] > -160 &&
-                            centroid[0] < -67 &&
-                            (Object.keys(offsets).indexOf(cur.id) === -1 ? (
-                              <Marker coordinates={centroid}>
-                                <text
-                                  y="2"
-                                  fontSize={14}
-                                  textAnchor="middle"
+                    return (
+                      <OverlayTrigger
+                        trigger={["focus", "hover", "click"]}
+                        placement="right"
+                        key={geo.rsmKey}
+                        overlay={
+                          <Popover>
+                            <Popover.Title as="h4">{name}</Popover.Title>
+                            <PopoverContent>
+                              <div>
+                                <span
                                   style={{
-                                    userSelect: "none",
+                                    fontSize: "0.7rem",
                                   }}
                                 >
-                                  {cur.id}
-                                </text>
-                              </Marker>
-                            ) : (
-                              <Annotation
-                                subject={centroid}
-                                dx={offsets[cur.id][0]}
-                                dy={offsets[cur.id][1]}
-                              >
-                                <text
-                                  x={4}
-                                  fontSize={14}
-                                  alignmentBaseline="middle"
+                                  Total Confirmed:{" "}
+                                </span>
+                                <span className="confirmedCase">
+                                  {rounded(cases)}
+                                </span>
+                                <span
+                                  className="confirmedCase font-weight-bold"
+                                  style={{
+                                    fontSize: "0.6rem",
+                                  }}
                                 >
-                                  {cur.id}
-                                </text>
-                              </Annotation>
-                            ))}
-                        </g>
-                      );
-                    })}
-                  </>
-                )}
-              </Geographies>
-            )}
+                                  {typeof todayCases === "number"
+                                    ? ` + ${rounded(todayCases)} new`
+                                    : "N/A"}
+                                </span>
+                              </div>
+
+                              <div>
+                                <span
+                                  style={{
+                                    fontSize: "0.7rem",
+                                  }}
+                                >
+                                  Total Deaths:{" "}
+                                </span>
+                                <span className="deathCase">
+                                  {rounded(deaths)}
+                                </span>
+                                <span
+                                  className="deathCase font-weight-bold"
+                                  style={{
+                                    fontSize: "0.6rem",
+                                  }}
+                                >
+                                  {typeof todayDeaths === "number"
+                                    ? ` + ${rounded(todayDeaths)} new`
+                                    : "N/A"}
+                                </span>
+                              </div>
+
+                              <div>
+                                <span
+                                  style={{
+                                    fontSize: "0.7rem",
+                                  }}
+                                >
+                                  Total Tests:{" "}
+                                </span>
+                                <span className="recoveredCase">
+                                  {rounded(tests)}
+                                </span>
+                              </div>
+                            </PopoverContent>
+                          </Popover>
+                        }
+                      >
+                        <Geography
+                          key={geo.rsmKey}
+                          stroke="#FFF"
+                          geography={geo}
+                          // fill="#DDD"
+                          style={{
+                            default: {
+                              fill: `${colorPick(
+                                colorCalculate(
+                                  mapSummaryData.TotalConfirmed,
+                                  cases
+                                )
+                              )}`,
+                              stroke: "#adb5bd",
+                              strokeWidth: 0.75,
+                              outline: "none",
+                            },
+                            hover: {
+                              fill: "#F53",
+                              stroke: "#adb5bd",
+                              strokeWidth: 0.75,
+                              outline: "none",
+                            },
+                            pressed: {
+                              fill: "#E42",
+                              stroke: "#adb5bd",
+                              strokeWidth: 0.75,
+                              outline: "none",
+                            },
+                          }}
+                        />
+                      </OverlayTrigger>
+                    );
+                  })}
+
+                  {geographies.map((geo) => {
+                    const centroid = geoCentroid(geo);
+                    const cur = allStates.find((s) => s.val === geo.id);
+                    return (
+                      <g key={geo.rsmKey + "-name"}>
+                        {cur &&
+                          centroid[0] > -160 &&
+                          centroid[0] < -67 &&
+                          (Object.keys(offsets).indexOf(cur.id) === -1 ? (
+                            <Marker coordinates={centroid}>
+                              <text
+                                y="2"
+                                fontSize={14}
+                                textAnchor="middle"
+                                style={{
+                                  userSelect: "none",
+                                }}
+                              >
+                                {cur.id}
+                              </text>
+                            </Marker>
+                          ) : (
+                            <Annotation
+                              subject={centroid}
+                              dx={offsets[cur.id][0]}
+                              dy={offsets[cur.id][1]}
+                            >
+                              <text
+                                x={4}
+                                fontSize={14}
+                                alignmentBaseline="middle"
+                              >
+                                {cur.id}
+                              </text>
+                            </Annotation>
+                          ))}
+                      </g>
+                    );
+                  })}
+                </>
+              )}
+            </Geographies>
+            }
           </ComposableMap>
           <MapCaseSummary />
         </>

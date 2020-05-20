@@ -5,24 +5,20 @@ import axios from "axios";
 
 const trackReducer = (state, action) => {
   switch (action.type) {
-    case "add_US_data":
-      return { ...state, US_Case_Data: action.playload, loading: false };
     case "fetch_US_data":
       return {
         ...state,
         caseData: action.playload[0],
         mapSummaryData: action.playload[1],
-        loading: true,
+        US_Case_Data: action.playload[2],
       };
     case "fetch_world_data":
       return {
         ...state,
         caseData: action.playload[0],
         mapSummaryData: action.playload[1],
-        loading: true,
+        worldMapData: action.playload[2],
       };
-    case "add_world_data":
-      return { ...state, World_Case_Data: action.playload, loading: false };
     default:
       return state;
   }
@@ -41,36 +37,34 @@ const fetchWorldData = (dispatch) => async () => {
     (x, y) => y.TotalConfirmed - x.TotalConfirmed
   );
 
-  dispatch({
-    type: "fetch_world_data",
-    playload: [data, caseData.data.Global],
-  });
+  let state = {};
 
-  return data;
-};
-
-const addWorldData = (dispatch) => async (state) => {
-  let data = {};
   try {
-    for (let each of state) {
-      data[each.Country] = each;
+    for (let each of data) {
+      state[each.Country] = each;
     }
 
     for (let countryData of WorldRawData.objects.ne_110m_admin_0_countries
       .geometries) {
-      countryData.properties = data[countryData.properties.NAME]
-        ? { ...countryData.properties, ...data[countryData.properties.NAME] }
+      if (!state[countryData.properties.NAME])
+        console.log(countryData.properties.NAME);
+      countryData.properties = state[countryData.properties.NAME]
+        ? { ...countryData.properties, ...state[countryData.properties.NAME] }
         : countryData.properties;
     }
   } catch (err) {
     console.log(err, "World Map Fetch Data Error");
   }
 
-  dispatch({ type: "add_wolrd_data", playload: WorldRawData });
+  return dispatch({
+    type: "fetch_world_data",
+    playload: [data, caseData.data.Global, WorldRawData],
+  });
 };
 
 const fetchUSData = (dispatch) => async () => {
   let fetch_case_data, fetch_summary_Data;
+  let state = {};
 
   try {
     fetch_case_data = await axios.get(
@@ -81,6 +75,9 @@ const fetchUSData = (dispatch) => async () => {
     );
   } catch (err) {
     console.log(err, "Error");
+    setTimeout(function () {
+      console.log("Hello");
+    }, 3000);
   }
 
   const {
@@ -113,41 +110,33 @@ const fetchUSData = (dispatch) => async () => {
     });
   }
 
-  dispatch({
-    type: "fetch_US_data",
-    playload: [caseData, summaryData],
-  });
-
-  return fetch_case_data.data;
-};
-
-const addUSData = (dispatch) => async (state) => {
-  let data = {};
   try {
-    for (let each of state) {
-      data[each.state] = each;
+    for (let each of fetch_case_data.data) {
+      state[each.state] = each;
     }
 
     for (let stateData of USRawData.objects.states.geometries) {
-      stateData.properties = data[stateData.properties.name]
-        ? { ...stateData.properties, ...data[stateData.properties.name] }
+      stateData.properties = state[stateData.properties.name]
+        ? { ...stateData.properties, ...state[stateData.properties.name] }
         : stateData.properties;
     }
   } catch (err) {
     console.log(err, "US Map Fetch Data Error");
   }
 
-  dispatch({ type: "add_US_data", playload: USRawData });
+  dispatch({
+    type: "fetch_US_data",
+    playload: [caseData, summaryData, USRawData],
+  });
 };
 
 export const { Provider, Context } = createDataContext(
   trackReducer,
-  { addUSData, fetchUSData, fetchWorldData, addWorldData },
+  { fetchUSData, fetchWorldData },
   {
     mapSummaryData: {},
     caseData: [],
     USMapData: USRawData,
     worldMapData: WorldRawData,
-    loading: true,
   }
 );

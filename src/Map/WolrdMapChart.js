@@ -24,20 +24,17 @@ export const WolrdMapChart = () => {
   const {
     state: { worldMapData, mapSummaryData },
     fetchWorldData,
-    addWorldData,
   } = useContext(MapContext);
 
   useEffect(() => {
     let fetch = async () => {
       try {
-        let data = await fetchWorldData();
-        await addWorldData(data);
+        await fetchWorldData();
         setLoading(false);
       } catch (err) {
         console.log(err);
       }
     };
-
     fetch();
   }, []);
 
