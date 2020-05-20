@@ -1,7 +1,7 @@
 import React from "react";
-import { Navbar } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 
-const Nav = () => {
+const Header = () => {
   return (
     <Navbar
       style={{
@@ -18,8 +18,19 @@ const Nav = () => {
           src="/logo.jpeg"
         />
       </Navbar.Brand>
+      <Nav.Link
+        style={{
+          color: "rgba(0,0,0,.7)",
+          hover: {
+            color: "black",
+          },
+        }}
+        href="/"
+      >
+        Home
+      </Nav.Link>
     </Navbar>
   );
 };
 
-export default Nav;
+export default Header;
