@@ -1,9 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 // import axios from "axios";
-import { Table } from "react-bootstrap";
+import { Table, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { abbrev, rounded } from "../helper";
 import { Context as MapContext } from "../context/MapContext";
 import { MapLoading } from "../Component/MapLoading";
+import { IoIosMore } from "react-icons/io";
+import "./index.css";
 
 const Board = () => {
   const {
@@ -11,6 +13,9 @@ const Board = () => {
   } = useContext(MapContext);
 
   const [maxCount, setMaxCount] = useState(20);
+  const [hover, setHover] = useState(false);
+  const [more, setMore] = useState(false);
+  const target = useRef(null);
 
   return (
     <div
@@ -21,7 +26,6 @@ const Board = () => {
         overflow: "hidden",
       }}
     >
-      {/* <h3>World Statistics</h3> */}
       {!!caseData.length ? (
         <div
           style={{
@@ -40,15 +44,58 @@ const Board = () => {
                 color: "white",
               }}
             >
-              <tr>
+              <tr
+                style={{
+                  textAlign: "center",
+                }}
+              >
                 <th>#</th>
                 <th>Location</th>
                 <th>Case #</th>
-                {/* <th>Death</th>
-                <th>Recovered</th> */}
+                {!more ? (
+                  <OverlayTrigger
+                    target={target.current}
+                    placement="top"
+                    show={hover}
+                    overlay={
+                      <Tooltip
+                        style={{
+                          marginBottom: 5,
+                        }}
+                      >
+                        More Detail
+                      </Tooltip>
+                    }
+                  >
+                    <th
+                      ref={target}
+                      onMouseEnter={() => setHover(true)}
+                      onMouseLeave={() => setHover(false)}
+                      onClick={() => setMore(true)}
+                      style={{
+                        background: hover ? "turquoise" : "teal",
+                      }}
+                    >
+                      <IoIosMore />
+                    </th>
+                  </OverlayTrigger>
+                ) : (
+                  <>
+                    <th>Active_Case</th>
+                    <th>Active_Rate</th>
+                    <th>Death</th>
+                    <th>Death_Rate</th>
+                    <th>Recovered</th>
+                    <th>Recovered_Rate</th>
+                  </>
+                )}
               </tr>
             </thead>
-            <tbody>
+            <tbody
+              style={{
+                textAlign: "center",
+              }}
+            >
               <tr></tr>
               {caseData
                 .slice(0, maxCount)
@@ -72,7 +119,7 @@ const Board = () => {
                         {TotalConfirmed}{" "}
                         <div
                           style={{
-                            fontSize: "0.6rem",
+                            fontSize: "0.55rem",
                           }}
                         >
                           {typeof NewConfirmed === "number"
@@ -81,33 +128,66 @@ const Board = () => {
                         </div>
                       </td>
 
-                      {/* <td className="deathCase">
-                        {TotalDeaths}{" "}
-                        <div
-                          className="font-weight-bold"
-                          style={{
-                            fontSize: "0.6rem",
-                          }}
-                        >
-                          {typeof NewConfirmed === "number"
-                            ? ` + ${rounded(NewDeaths)} new`
-                            : "N/A"}
-                        </div>
-                      </td>
+                      {more ? (
+                        <>
+                          <td className="testCase">
+                            {TotalConfirmed - TotalDeaths - TotalRecovered}
+                          </td>
 
-                      <td className="recoveredCase">
-                        {TotalRecovered}{" "}
-                        <div
-                          className="font-weight-bold"
-                          style={{
-                            fontSize: "0.6rem",
-                          }}
-                        >
-                          {typeof NewConfirmed === "number"
-                            ? ` + ${rounded(NewRecovered)} new`
-                            : "N/A"}
-                        </div>
-                      </td> */}
+                          <td className="activeCase">
+                            {Number(
+                              ((TotalConfirmed - TotalDeaths - TotalRecovered) *
+                                100) /
+                                TotalConfirmed
+                            ).toFixed(1)}
+                            %
+                          </td>
+
+                          <td className="deathCase">
+                            {TotalDeaths}{" "}
+                            <div
+                              className="font-weight-bold"
+                              style={{
+                                fontSize: "0.55rem",
+                              }}
+                            >
+                              {typeof NewConfirmed === "number"
+                                ? ` + ${rounded(NewDeaths)} new`
+                                : "N/A"}
+                            </div>
+                          </td>
+
+                          <td className="deathRate font-weight-bold">
+                            {Number(
+                              (TotalDeaths / TotalConfirmed) * 100
+                            ).toFixed(1)}
+                            %
+                          </td>
+
+                          <td className="recoveredCase">
+                            {TotalRecovered}{" "}
+                            <div
+                              className="font-weight-bold"
+                              style={{
+                                fontSize: "0.55rem",
+                              }}
+                            >
+                              {typeof NewConfirmed === "number"
+                                ? ` + ${rounded(NewRecovered)} new`
+                                : "N/A"}
+                            </div>
+                          </td>
+
+                          <td className="recoveredRate font-weight-bold">
+                            {Number(
+                              (TotalRecovered / TotalConfirmed) * 100
+                            ).toFixed(1)}
+                            %
+                          </td>
+                        </>
+                      ) : (
+                        <td></td>
+                      )}
                     </tr>
                   )
                 )}

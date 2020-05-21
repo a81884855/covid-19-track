@@ -40,3 +40,15 @@
 .testCase {
   color: #f7b924;
 }
+
+.activeCase {
+  color: #f9b115;
+}
+
+.deathRate {
+  color: #e55353;
+}
+
+.recoveredRate {
+  color: #2eb85c;
+}
