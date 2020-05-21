@@ -1,29 +1,21 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import Chart from "react-apexcharts";
 import { Context as ChartContext } from "../context/ChartContext";
 
 const ChartComponent = () => {
-  const [loading, setLoading] = useState(true);
   const {
-    state: { data, series },
+    state: { loading, data, series },
     fetchData,
+    setLoading,
     addSeries,
   } = useContext(ChartContext);
 
   useEffect(() => {
-    let fetch = async () => {
-      try {
-        await fetchData();
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    (async () => {
-      await fetch();
-      setLoading(false);
-    })();
+    setLoading();
+    fetchData();
   }, []);
+
+  console.log("data", data);
 
   const add = () => {
     addSeries({
@@ -94,14 +86,14 @@ const ChartComponent = () => {
         {
           title: {
             formatter: function (val) {
-              return val + " (mins)";
+              return val;
             },
           },
         },
         {
           title: {
             formatter: function (val) {
-              return val + " per session";
+              return val;
             },
           },
         },

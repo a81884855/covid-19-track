@@ -21,11 +21,17 @@ const trackReducer = (state, action) => {
             data: action.playload.Russia.case,
           },
         ],
+        loading: false,
       };
     case "add_series":
       return {
         ...state,
         series: [...state.series, action.playload],
+      };
+    case "set_loading":
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;
@@ -57,11 +63,26 @@ const fetchData = (dispatch) => async () => {
         recovered.push(each.timeline.recovered[recoveredData]);
       }
 
-      data[each.country] = {
-        case: caseArr,
-        deaths,
-        recovered,
-      };
+      // In some cases, one country have mutilple provinces data
+      if (data[each.country]) {
+        for (let i in data[each.country].case) {
+          data[each.country].case[i] += caseArr[i];
+        }
+
+        for (let i in data[each.country].deaths) {
+          data[each.country].case[i] += deaths[i];
+        }
+
+        for (let i in data[each.country].recovered) {
+          data[each.country].case[i] += recovered[i];
+        }
+      } else {
+        data[each.country] = {
+          case: caseArr,
+          deaths,
+          recovered,
+        };
+      }
     }
   } catch (err) {
     console.log("Err", err);
@@ -80,11 +101,18 @@ const addSeries = (dispatch) => async (state) => {
   });
 };
 
+const setLoading = (dispatch) => async () => {
+  dispatch({
+    type: "set_loading",
+  });
+};
+
 export const { Provider, Context } = createDataContext(
   trackReducer,
-  { fetchData, addSeries },
+  { fetchData, addSeries, setLoading },
   {
     data: [],
     series: [],
+    loading: false,
   }
 );
