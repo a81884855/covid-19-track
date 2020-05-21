@@ -1,0 +1,42 @@
+.caseDisplayContainer {
+  color: white;
+  text-align: center;
+  padding-top: 12px;
+}
+
+.caseDisplayContainer span {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.confirmedCaseBackground {
+  background: #39f;
+}
+
+.deathCaseBackground {
+  background: #e55353;
+}
+
+.recoveredCaseBackground {
+  background: #2eb85c;
+}
+
+.testCaseBackground {
+  background: #f7b924;
+}
+
+.confirmedCase {
+  color: #427cd2;
+}
+
+.deathCase {
+  color: #c74333;
+}
+
+.recoveredCase {
+  color: #2eb85c;
+}
+
+.testCase {
+  color: #f7b924;
+}
