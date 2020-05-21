@@ -46,8 +46,8 @@ const fetchWorldData = (dispatch) => async () => {
 
     for (let countryData of WorldRawData.objects.ne_110m_admin_0_countries
       .geometries) {
-      if (!state[countryData.properties.NAME])
-        console.log(countryData.properties.NAME);
+      // if (!state[countryData.properties.NAME])
+      //   console.log(countryData.properties.NAME);
       countryData.properties = state[countryData.properties.NAME]
         ? { ...countryData.properties, ...state[countryData.properties.NAME] }
         : countryData.properties;
