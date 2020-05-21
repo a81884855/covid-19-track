@@ -4,11 +4,13 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { Provider as WorldMapDataProvider } from "./context/worldMapContext";
+import { Provider as ChartDataProvider } from "./context/ChartContext";
 import { Provider as MapDataProvider } from "./context/MapContext";
 ReactDOM.render(
   <MapDataProvider>
-    <App />
+    <ChartDataProvider>
+      <App />
+    </ChartDataProvider>
   </MapDataProvider>,
   document.getElementById("root")
 );
