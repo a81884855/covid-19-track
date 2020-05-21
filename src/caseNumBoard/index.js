@@ -26,7 +26,7 @@ const Board = () => {
         <div
           style={{
             overflow: "scroll",
-            height: 700,
+            height: "100vh",
           }}
           onScroll={(e) => {
             if (e.target.scrollHeight - e.target.scrollTop === 700)
