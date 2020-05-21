@@ -30,12 +30,15 @@ export const WolrdMapChart = () => {
     let fetch = async () => {
       try {
         await fetchWorldData();
-        setLoading(false);
       } catch (err) {
         console.log(err);
       }
     };
-    fetch();
+
+    (async () => {
+      await fetch();
+      setLoading(false);
+    })();
   }, []);
 
   const handleZoomIn = () => {
