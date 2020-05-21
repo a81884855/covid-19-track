@@ -5,7 +5,6 @@ import { abbrev, rounded } from "../helper";
 import { Context as MapContext } from "../context/MapContext";
 import { MapLoading } from "../Component/MapLoading";
 import { IoIosMore } from "react-icons/io";
-import "./index.css";
 
 const Board = () => {
   const {
