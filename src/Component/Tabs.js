@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Tabs.css";
 
-const tabs = ["World", "United States", "European"];
+const tabs = ["World", "United States", "Europe"];
 
 const Tabs = ({ setMap }) => {
   const [target, setTarget] = useState("World");
