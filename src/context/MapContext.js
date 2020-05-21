@@ -5,12 +5,18 @@ import axios from "axios";
 
 const trackReducer = (state, action) => {
   switch (action.type) {
+    case "set_loading":
+      return {
+        ...state,
+        loading: true,
+      };
     case "fetch_US_data":
       return {
         ...state,
         caseData: action.playload[0],
         mapSummaryData: action.playload[1],
         US_Case_Data: action.playload[2],
+        loading: false,
       };
     case "fetch_world_data":
       return {
@@ -18,10 +24,18 @@ const trackReducer = (state, action) => {
         caseData: action.playload[0],
         mapSummaryData: action.playload[1],
         worldMapData: action.playload[2],
+        loading: false,
       };
     default:
       return state;
   }
+};
+
+const setLoading = (dispatch) => (state) => {
+  return dispatch({
+    type: "set_loading",
+    // playload: true,
+  });
 };
 
 const fetchWorldData = (dispatch) => async () => {
@@ -31,6 +45,7 @@ const fetchWorldData = (dispatch) => async () => {
     caseData = await axios.get("https://api.covid19api.com/summary");
   } catch (err) {
     console.log(err, "Error");
+    return;
   }
 
   let data = caseData.data.Countries.sort(
@@ -132,11 +147,12 @@ const fetchUSData = (dispatch) => async () => {
 
 export const { Provider, Context } = createDataContext(
   trackReducer,
-  { fetchUSData, fetchWorldData },
+  { fetchUSData, fetchWorldData, setLoading },
   {
     mapSummaryData: {},
     caseData: [],
     USMapData: USRawData,
     worldMapData: WorldRawData,
+    loading: true,
   }
 );
