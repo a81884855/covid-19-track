@@ -14,7 +14,6 @@ const MapCaseSummary = () => {
         TotalRecovered,
         NewRecovered,
         Test,
-        TestsPerOneMillion,
       },
     },
   } = useContext(MapContext);
@@ -86,8 +85,8 @@ const MapCaseSummary = () => {
                 fontSize: "0.6rem",
               }}
             >
-              {TestsPerOneMillion
-                ? ` ${TestsPerOneMillion} Per Million`
+              {Test
+                ? ` ${Number(Test / TotalConfirmed).toFixed(1)}% Confirmed`
                 : "N/A"}
             </p>
           </span>
