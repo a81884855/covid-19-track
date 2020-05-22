@@ -15,13 +15,13 @@ const MapChart = () => {
         return <WorldMapChart />;
       case "United States":
         return <USMapChart />;
-      case "European":
+      case "Europe":
         return (
           <div
             style={{
               height: 600,
               textAlign: "center",
-              paddingTop: "30%",
+              paddingTop: "25%",
             }}
           >
             <h1>Comming Soon...</h1>
