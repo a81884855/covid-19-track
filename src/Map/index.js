@@ -4,6 +4,7 @@ import "./index.css";
 import { Row, Col } from "react-bootstrap";
 import MapChart from "./MapChart";
 import Board from "../caseNumBoard";
+import ScrollAnimation from "react-animate-on-scroll";
 
 const MapContainer = () => {
   return (
@@ -19,10 +20,14 @@ const MapContainer = () => {
         }}
       >
         <Col lg={12} xl={8}>
-          <MapChart />
+          <ScrollAnimation animateIn="bounceInUp">
+            <MapChart />
+          </ScrollAnimation>
         </Col>
         <Col lg={12} xl={4}>
-          <Board />
+          <ScrollAnimation animateIn="bounceInUp">
+            <Board />
+          </ScrollAnimation>
         </Col>
       </Row>
     </div>
