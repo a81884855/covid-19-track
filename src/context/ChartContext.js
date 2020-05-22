@@ -6,27 +6,14 @@ const trackReducer = (state, action) => {
     case "fetch_data":
       return {
         ...state,
-        data: action.playload,
-        series: [
-          {
-            name: "USA",
-            data: action.playload.USA.case,
-          },
-          {
-            name: "UK",
-            data: action.playload.UK.case,
-          },
-          {
-            name: "Russia",
-            data: action.playload.Russia.case,
-          },
-        ],
+        data: action.playload[0],
+        series: action.playload[1],
         loading: false,
       };
-    case "add_series":
+    case "update_series":
       return {
         ...state,
-        series: [...state.series, action.playload],
+        series: action.playload,
       };
     case "set_loading":
       return {
@@ -38,9 +25,11 @@ const trackReducer = (state, action) => {
   }
 };
 
-const fetchData = (dispatch) => async () => {
+const fetchData = (dispatch) => async (state, info) => {
   let fetch_data;
   let data = {};
+  let series = [];
+
   try {
     fetch_data = await axios.get(
       "https://corona.lmao.ninja/v2/historical?lastdays=14"
@@ -88,20 +77,28 @@ const fetchData = (dispatch) => async () => {
     console.log("Err", err);
   }
 
+  for (let country of state) {
+    series.push({
+      name: country,
+      data: data[country][info],
+    });
+  }
+
   dispatch({
     type: "fetch_data",
-    playload: data,
+    playload: [data, series],
   });
 };
 
-const addSeries = (dispatch) => async (state) => {
+const updateSeries = (dispatch) => (state) => {
+  console.log(state, "update");
   dispatch({
-    type: "add_series",
+    type: "update_series",
     playload: state,
   });
 };
 
-const setLoading = (dispatch) => async () => {
+const setLoading = (dispatch) => () => {
   dispatch({
     type: "set_loading",
   });
@@ -109,7 +106,7 @@ const setLoading = (dispatch) => async () => {
 
 export const { Provider, Context } = createDataContext(
   trackReducer,
-  { fetchData, addSeries, setLoading },
+  { fetchData, updateSeries, setLoading },
   {
     data: [],
     series: [],
