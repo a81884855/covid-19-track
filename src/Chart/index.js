@@ -1,28 +1,55 @@
-import React, { useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Chart from "react-apexcharts";
 import { Context as ChartContext } from "../context/ChartContext";
+import CountryIcons from "./CountryIcons";
+import ScrollAnimation from "react-animate-on-scroll";
+
+const defaultSet = new Set(["USA", "UK", "Russia", "Brazil"]);
 
 const ChartComponent = () => {
+  const [active, setActive] = useState(defaultSet);
+
+  const [info, setInfo] = useState("case");
+
   const {
     state: { loading, data, series },
     fetchData,
     setLoading,
-    addSeries,
+    updateSeries,
   } = useContext(ChartContext);
 
   useEffect(() => {
     setLoading();
-    fetchData();
+    fetchData(active, info);
   }, []);
 
-  console.log("data", data);
+  const update = (arr) => {
+    let newSeries = [];
 
-  const add = () => {
-    addSeries({
-      name: "Brazil",
-      data: data.Brazil.case,
-    });
+    for (let country of arr) {
+      newSeries.push({
+        name: country,
+        data: data[country][info],
+      });
+    }
+
+    updateSeries(newSeries);
   };
+
+  const handleActive = (target) => {
+    if (active.has(target)) {
+      active.delete(target);
+    } else {
+      active.add(target);
+    }
+
+    update(active);
+    return setActive(new Set([...active]));
+  };
+
+  // const handleActive = () => {
+  //   setActive(!active);
+  // };
 
   const options = {
     chart: {
@@ -35,7 +62,7 @@ const ChartComponent = () => {
       enabled: false,
     },
     stroke: {
-      width: [5, 7, 5],
+      width: 5,
       curve: "straight",
       dashArray: [0, 8, 5],
     },
@@ -90,20 +117,6 @@ const ChartComponent = () => {
             },
           },
         },
-        {
-          title: {
-            formatter: function (val) {
-              return val;
-            },
-          },
-        },
-        {
-          title: {
-            formatter: function (val) {
-              return val;
-            },
-          },
-        },
       ],
     },
     grid: {
@@ -112,19 +125,25 @@ const ChartComponent = () => {
   };
 
   return (
-    <div
-      style={{
-        margin: "0.3rem 1rem",
-        padding: "0 1rem",
-      }}
-    >
-      <button onClick={add}>Add</button>
-      {!loading ? (
-        <Chart options={options} series={series} height={550} />
-      ) : (
-        <p>Loading</p>
-      )}
-    </div>
+    <ScrollAnimation offset={350} animateIn="zoomIn">
+      <div
+        style={{
+          margin: "0.3rem 1rem",
+          padding: "0 1rem",
+        }}
+      >
+        <ScrollAnimation offset={250} animateIn="bounceIn" delay={1000}>
+          <CountryIcons active={active} handleActive={handleActive} />
+        </ScrollAnimation>
+
+        {!loading ? (
+          <Chart options={options} series={series} height={550} />
+        ) : (
+          <p>Loading</p>
+        )}
+      </div>
+    </ScrollAnimation>
   );
 };
+
 export default ChartComponent;
