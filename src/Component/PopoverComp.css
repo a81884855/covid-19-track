@@ -10,45 +10,45 @@
 }
 
 .confirmedCaseBackground {
-  background: #39f;
+  background: #39f !important;
 }
 
 .deathCaseBackground {
-  background: #e55353;
+  background: #e55353 !important;
 }
 
 .recoveredCaseBackground {
-  background: #2eb85c;
+  background: #2eb85c !important;
 }
 
 .testCaseBackground {
-  background: #f7b924;
+  background: #f7b924 !important;
 }
 
 .confirmedCase {
-  color: #427cd2;
+  color: #427cd2 !important;
 }
 
 .deathCase {
-  color: #c74333;
+  color: #c74333 !important;
 }
 
 .recoveredCase {
-  color: #2eb85c;
+  color: #2eb85c !important;
 }
 
 .testCase {
-  color: #f7b924;
+  color: #f7b924 !important;
 }
 
 .activeCase {
-  color: #f9b115;
+  color: #f9b115 !important;
 }
 
 .deathRate {
-  color: #e55353;
+  color: #e55353 !important;
 }
 
 .recoveredRate {
-  color: #2eb85c;
+  color: #2eb85c !important;
 }
