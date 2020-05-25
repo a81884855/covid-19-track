@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
+// import Paper from "@material-ui/core/Paper";
+import { Paper, Table, TableBody, TableCell } from "@material-ui/core";
+// import  from "@material-ui/core/TableBody";
+// import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
@@ -30,14 +30,14 @@ export default function StickyHeadTable({ caseData }) {
   const target = useRef(null);
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} elevation={3}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               <TableCell align="center">#</TableCell>
               <TableCell align="center">Location</TableCell>
-              <TableCell align="center">Case #</TableCell>
+              <TableCell align="center">Confirmed#</TableCell>
               {!more ? (
                 <OverlayTrigger
                   target={target.current}
