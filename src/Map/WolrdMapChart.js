@@ -10,13 +10,13 @@ import {
 import { Context as MapContext } from "../context/MapContext";
 
 import { OverlayTrigger } from "react-bootstrap";
-import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
 
 import { colorPick, colorCalculate } from "../helper";
 
 import { MapLoading } from "../Component/MapLoading";
 import PopoverComp from "../Component/PopoverComp";
 import MapCaseSummary from "./MapCaseSummary";
+import ZoomButton from "./ZoomButton";
 
 export const WolrdMapChart = () => {
   // const [loading, setLoading] = useState(true);
@@ -33,20 +33,6 @@ export const WolrdMapChart = () => {
     fetchWorldData();
   }, []);
 
-  const handleZoomIn = () => {
-    if (position.zoom >= 4) return;
-    setPosition((pos) => ({ ...pos, zoom: pos.zoom * 2 }));
-  };
-
-  const handleZoomOut = () => {
-    if (position.zoom <= 1) return;
-    setPosition((pos) => ({ ...pos, zoom: pos.zoom / 2 }));
-  };
-
-  const handleMoveEnd = (position) => {
-    setPosition(position);
-  };
-
   return (
     <>
       {!loading ? (
@@ -59,7 +45,7 @@ export const WolrdMapChart = () => {
             <ZoomableGroup
               zoom={position.zoom}
               center={position.coordinates}
-              onMoveEnd={handleMoveEnd}
+              // onMoveEnd={handleMoveEnd}
             >
               <Graticule stroke="#eeeeee" />
               <Geographies geography={worldMapData}>
@@ -125,11 +111,7 @@ export const WolrdMapChart = () => {
               </Geographies>
             </ZoomableGroup>
           </ComposableMap>
-
-          <div className="controls">
-            <FaPlusCircle className="controls-icons" onClick={handleZoomIn} />
-            <FaMinusCircle className="controls-icons" onClick={handleZoomOut} />
-          </div>
+          <ZoomButton position={position} setPosition={setPosition} />
           {MapCaseSummary()}
         </>
       ) : (
