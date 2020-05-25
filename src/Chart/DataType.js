@@ -14,7 +14,8 @@ export default function DataType({ info, infoChangeHandler }) {
   return (
     <div
       style={{
-        padding: "1rem 1rem 1rem 0",
+        padding: "1.5rem 1rem",
+        flex: 10,
       }}
     >
       {infoSet.map(({ name, variant, value }) => (
