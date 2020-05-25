@@ -25,14 +25,14 @@ const trackReducer = (state, action) => {
   }
 };
 
-const fetchData = (dispatch) => async (state, info) => {
+const fetchData = (dispatch) => async (state, info, days) => {
   let fetch_data;
   let data = {};
   let series = [];
 
   try {
     fetch_data = await axios.get(
-      "https://corona.lmao.ninja/v2/historical?lastdays=14"
+      `https://corona.lmao.ninja/v2/historical?lastdays=${days}`
     );
 
     for (let each of fetch_data.data) {
@@ -84,7 +84,7 @@ const fetchData = (dispatch) => async (state, info) => {
   for (let country of state) {
     series.push({
       name: country,
-      data: data[country][info],
+      data: getData(data, country, info),
     });
   }
 
@@ -117,3 +117,28 @@ export const { Provider, Context } = createDataContext(
     loading: false,
   }
 );
+
+const getData = (data, country, type) => {
+  switch (type) {
+    case "case":
+      return data[country]["case"];
+    case "deaths":
+      return data[country]["deaths"];
+    case "recovered":
+      return data[country]["recovered"];
+    case "recovered_rate":
+      return data[country]["recovered"].map((num, i) =>
+        Number((num / data[country]["case"][i]) * 100).toFixed(1)
+      );
+    case "death_rate":
+      return data[country]["deaths"].map((num, i) =>
+        Number((num / data[country]["case"][i]) * 100).toFixed(1)
+      );
+    case "new_case":
+      return data[country]["case"].map((num, i) =>
+        i !== 0 ? num - data[country]["case"][i - 1] : null
+      );
+    default:
+      return data[country]["case"];
+  }
+};

@@ -3,7 +3,8 @@ import Chart from "react-apexcharts";
 import { Context as ChartContext } from "../context/ChartContext";
 import ScrollAnimation from "react-animate-on-scroll";
 import { MapLoading } from "../Component/MapLoading";
-import { Paper } from "@material-ui/core";
+import { Paper, FormControl, InputLabel, Select } from "@material-ui/core";
+import { dateLabel } from "../helper";
 
 import CountryIcons from "./CountryIcons";
 import DataType from "./DataType";
@@ -12,8 +13,10 @@ const defaultSet = new Set(["UK", "Russia", "Brazil"]);
 
 const ChartComponent = () => {
   const [active, setActive] = useState(defaultSet);
-
   const [info, setInfo] = useState("case");
+  const [days, setDays] = useState(14);
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
 
   const {
     state: { loading, data, series },
@@ -23,8 +26,9 @@ const ChartComponent = () => {
   } = useContext(ChartContext);
 
   useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
     setLoading();
-    fetchData(active, info);
+    fetchData(active, info, days);
   }, []);
 
   const update = (arr, type = null) => {
@@ -70,15 +74,15 @@ const ChartComponent = () => {
     }
   };
 
-  const handleActive = (target) => {
+  const handleActive = async (target) => {
     if (active.has(target)) {
       active.delete(target);
     } else {
       active.add(target);
     }
 
-    update(active);
-    return setActive(new Set([...active]));
+    await setActive(new Set([...active]));
+    await update(active, info);
   };
 
   const options = {
@@ -121,22 +125,25 @@ const ChartComponent = () => {
       },
     },
     xaxis: {
-      categories: [
-        "5/6",
-        "5/7",
-        "5/8",
-        "5/9",
-        "5/10",
-        "5/11",
-        "5/12",
-        "5/13",
-        "5/14",
-        "5/15",
-        "5/16",
-        "5/17",
-        "5/18",
-        "5/19",
-      ],
+      categories: dateLabel(days),
+      labels: {
+        style: {
+          fontSize: "15px",
+          fontFamily: "Helvetica, Arial, sans-serif",
+          fontWeight: 400,
+          cssClass: "apexcharts-xaxis-label",
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          fontSize: "15px",
+          fontFamily: "Helvetica, Arial, sans-serif",
+          fontWeight: 400,
+          cssClass: "apexcharts-xaxis-label",
+        },
+      },
     },
     tooltip: {
       y: [
@@ -190,7 +197,44 @@ const ChartComponent = () => {
           }}
           elevation={3}
         >
-          <DataType info={info} infoChangeHandler={infoChangeHandler} />
+          <div
+            style={{
+              display: "flex",
+            }}
+          >
+            <DataType info={info} infoChangeHandler={infoChangeHandler} />
+            <FormControl
+              variant="outlined"
+              style={{
+                margin: 5,
+                minWidth: 120,
+                // padding: 10,
+                marginTop: 10,
+              }}
+            >
+              <InputLabel ref={inputLabel}>Data Range</InputLabel>
+              <Select
+                style={{
+                  marginTop: 10,
+                }}
+                native
+                value={days}
+                labelWidth={labelWidth}
+                onChange={async (e) => {
+                  let days = e.target.value;
+                  await setDays(days);
+                  await fetchData(active, info, days);
+                }}
+              >
+                <option value={14}>2 Weeks</option>
+                <option value={7}>1 Week</option>
+                <option value={21}>3 Weeks</option>
+                <option value={30}>1 Month</option>
+                <option value={60}>2 Month</option>
+              </Select>
+            </FormControl>
+          </div>
+
           {!loading ? (
             <Chart options={options} series={series} height={600} />
           ) : (

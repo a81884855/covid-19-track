@@ -1,4 +1,14 @@
+const moment = require("moment");
+
 module.exports = {
+  dateLabel: (num) => {
+    let arr = [];
+    for (let i = 1; i <= num; i += 1) {
+      arr.unshift(moment().subtract(i, "days").format("MM/DD"));
+    }
+    return arr;
+  },
+
   rounded: (num) => {
     if (num > 1000000000) {
       return Math.round(num / 100000000) / 10 + "Bn";
