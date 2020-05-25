@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import Chart from "react-apexcharts";
 import { Context as ChartContext } from "../context/ChartContext";
-import CountryIcons from "./CountryIcons";
 import ScrollAnimation from "react-animate-on-scroll";
+import { MapLoading } from "../Component/MapLoading";
+import { Paper } from "@material-ui/core";
 
-const defaultSet = new Set(["USA", "UK", "Russia", "Brazil"]);
+import CountryIcons from "./CountryIcons";
+import DataType from "./DataType";
+
+const defaultSet = new Set(["UK", "Russia", "Brazil"]);
 
 const ChartComponent = () => {
   const [active, setActive] = useState(defaultSet);
@@ -23,17 +27,47 @@ const ChartComponent = () => {
     fetchData(active, info);
   }, []);
 
-  const update = (arr) => {
+  const update = (arr, type = null) => {
     let newSeries = [];
 
     for (let country of arr) {
       newSeries.push({
         name: country,
-        data: data[country][info],
+        data: getData(country, type),
       });
     }
 
     updateSeries(newSeries);
+  };
+
+  const infoChangeHandler = async (type) => {
+    await setInfo(type);
+    return update(active, type);
+  };
+
+  const getData = (country, type) => {
+    switch (type) {
+      case "case":
+        return data[country]["case"];
+      case "deaths":
+        return data[country]["deaths"];
+      case "recovered":
+        return data[country]["recovered"];
+      case "recovered_rate":
+        return data[country]["recovered"].map((num, i) =>
+          Number((num / data[country]["case"][i]) * 100).toFixed(1)
+        );
+      case "death_rate":
+        return data[country]["deaths"].map((num, i) =>
+          Number((num / data[country]["case"][i]) * 100).toFixed(1)
+        );
+      case "new_case":
+        return data[country]["case"].map((num, i) =>
+          i !== 0 ? num - data[country]["case"][i - 1] : null
+        );
+      default:
+        return data[country]["case"];
+    }
   };
 
   const handleActive = (target) => {
@@ -46,10 +80,6 @@ const ChartComponent = () => {
     update(active);
     return setActive(new Set([...active]));
   };
-
-  // const handleActive = () => {
-  //   setActive(!active);
-  // };
 
   const options = {
     chart: {
@@ -67,7 +97,7 @@ const ChartComponent = () => {
       dashArray: [0, 8, 5],
     },
     title: {
-      text: "World Statistics",
+      text: info,
       align: "left",
       style: {
         fontSize: "20px",
@@ -125,24 +155,50 @@ const ChartComponent = () => {
   };
 
   return (
-    <ScrollAnimation offset={350} animateIn="zoomIn">
+    <Paper
+      style={{
+        margin: "1.5rem ",
+        padding: "1rem",
+        minHeight: "100vh",
+      }}
+      elevation={3}
+    >
       <div
         style={{
-          margin: "0.3rem 1rem",
-          padding: "0 1rem",
+          margin: "1rem",
         }}
       >
-        <ScrollAnimation offset={250} animateIn="bounceIn" delay={1000}>
-          <CountryIcons active={active} handleActive={handleActive} />
-        </ScrollAnimation>
-
-        {!loading ? (
-          <Chart options={options} series={series} height={550} />
-        ) : (
-          <p>Loading</p>
-        )}
+        <h1>History Record</h1>
       </div>
-    </ScrollAnimation>
+      <ScrollAnimation
+        offset={50}
+        animateIn="zoomInDown"
+        animateOut="zoomOutDown"
+      >
+        <CountryIcons active={active} handleActive={handleActive} />
+      </ScrollAnimation>
+
+      <ScrollAnimation
+        offset={250}
+        animateIn="zoomInDown"
+        animateOut="zoomOutDown"
+      >
+        <Paper
+          style={{
+            margin: "1rem",
+            padding: "0.5rem",
+          }}
+          elevation={3}
+        >
+          <DataType info={info} infoChangeHandler={infoChangeHandler} />
+          {!loading ? (
+            <Chart options={options} series={series} height={600} />
+          ) : (
+            <MapLoading />
+          )}
+        </Paper>
+      </ScrollAnimation>
+    </Paper>
   );
 };
 
