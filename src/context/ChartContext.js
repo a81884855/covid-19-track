@@ -52,6 +52,10 @@ const fetchData = (dispatch) => async (state, info) => {
         recovered.push(each.timeline.recovered[recoveredData]);
       }
 
+      // if (each.country === "UK") {
+      //   console.log(each);
+      // }
+
       // In some cases, one country have mutilple provinces data
       if (data[each.country]) {
         for (let i in data[each.country].case) {
@@ -59,11 +63,11 @@ const fetchData = (dispatch) => async (state, info) => {
         }
 
         for (let i in data[each.country].deaths) {
-          data[each.country].case[i] += deaths[i];
+          data[each.country].deaths[i] += deaths[i];
         }
 
         for (let i in data[each.country].recovered) {
-          data[each.country].case[i] += recovered[i];
+          data[each.country].recovered[i] += recovered[i];
         }
       } else {
         data[each.country] = {
