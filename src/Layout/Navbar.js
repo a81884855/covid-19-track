@@ -15,7 +15,9 @@ const Header = () => {
             marginTop: -10,
           }}
           alt="logo"
-          src="/logo.jpeg"
+          src={`${
+            process.env.PUBLIC_URL && `${process.env.PUBLIC_URL}`
+          }/logo.jpeg`}
         />
       </Navbar.Brand>
       <Nav.Link

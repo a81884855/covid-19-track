@@ -51,7 +51,9 @@ const CountryIcons = ({ arr = default_arr, active, handleActive }) => {
           <Tooltip title={country}>
             <img
               className={`${active.has(country) && "active"} country-icons`}
-              src={`/country_icons/${country}.png`}
+              src={`${
+                process.env.PUBLIC_URL && `${process.env.PUBLIC_URL}`
+              }/country_icons/${country}.png`}
               alt={`${country}_icon`}
               onClick={() => handleActive(country)}
             />
