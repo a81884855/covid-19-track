@@ -74,7 +74,7 @@ const CountryIcons = ({ arr = default_arr, active, handleActive }) => {
             style={{
               border: "1px solid lightgrey",
               height: 60,
-              padding: 15,
+              padding: 14,
               userSelect: "none",
             }}
           >
