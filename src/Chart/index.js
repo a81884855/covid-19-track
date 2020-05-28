@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from "react";
 import Chart from "react-apexcharts";
 import { Context as ChartContext } from "../context/ChartContext";
@@ -185,11 +186,7 @@ const ChartComponent = () => {
         <CountryIcons active={active} handleActive={handleActive} />
       </ScrollAnimation>
 
-      <ScrollAnimation
-        offset={250}
-        animateIn="zoomInDown"
-        animateOut="zoomOutDown"
-      >
+      <ScrollAnimation offset={250} animateIn="zoomInDown" animateOut="rollOut">
         <Paper
           style={{
             margin: "1rem",
