@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     width: "100%",
   },
   container: {
-    maxHeight: "100vh",
+    height: "100vh",
     marginTop: 50,
   },
 });
