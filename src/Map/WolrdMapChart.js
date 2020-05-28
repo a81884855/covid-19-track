@@ -28,6 +28,10 @@ export const WolrdMapChart = () => {
     fetchWorldData,
   } = useContext(MapContext);
 
+  const handleMoveEnd = (position) => {
+    setPosition(position);
+  };
+
   useEffect(() => {
     setLoading();
     fetchWorldData();
@@ -45,7 +49,7 @@ export const WolrdMapChart = () => {
             <ZoomableGroup
               zoom={position.zoom}
               center={position.coordinates}
-              // onMoveEnd={handleMoveEnd}
+              onMoveEnd={handleMoveEnd}
             >
               <Graticule stroke="#eeeeee" />
               <Geographies geography={worldMapData}>

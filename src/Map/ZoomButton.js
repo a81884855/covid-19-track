@@ -12,10 +12,6 @@ export default function Zoom({ position, setPosition }) {
     setPosition((pos) => ({ ...pos, zoom: pos.zoom / 2 }));
   };
 
-  // const handleMoveEnd = (position) => {
-  //   setPosition(position);
-  // };
-
   return (
     <div className="controls">
       <FaPlusCircle className="controls-icons" onClick={handleZoomIn} />
