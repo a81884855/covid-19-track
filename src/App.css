@@ -12,3 +12,38 @@ svg {
   display: inline-block;
   vertical-align: middle;
 }
+
+div.footer {
+  padding: 30vh 0 0vh 0;
+  height: 100vh;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75));
+  color: white;
+}
+
+a.social {
+  font-size: 2.6rem;
+  margin: 0 1vw 0 1vw;
+  color: white;
+}
+
+a.social:hover {
+  color: white;
+}
+
+.footer .sentence {
+  font-size: 1.8rem;
+}
+
+.footer .sentence:hover {
+  animation: hoverUp 0.6s linear alternate-reverse;
+  cursor: default;
+}
+
+@keyframes hoverUp {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.5);
+  }
+}
