@@ -2,10 +2,10 @@ import React from "react";
 import { Button } from "react-bootstrap";
 
 const infoSet = [
-  { value: "case", name: "Confirmed Case", variant: "primary" },
+  { value: "new_case", name: "New Case", variant: "info" },
+  { value: "total_case", name: "Confirmed Case", variant: "primary" },
   { value: "deaths", name: "Deaths", variant: "danger" },
   { value: "recovered", name: "Recovered", variant: "success" },
-  { value: "new_case", name: "New Case", variant: "info" },
   { value: "recovered_rate", name: "Recovered_Rate", variant: "warning" },
   { value: "death_rate", name: "Death_Rate", variant: "dark" },
 ];
