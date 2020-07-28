@@ -21,7 +21,8 @@ const MapCaseSummary = () => {
   return (
     <Row
       style={{
-        padding: "0 15px 0 15px",
+        width: "100%",
+        margin: 0,
       }}
     >
       {TotalConfirmed && (
