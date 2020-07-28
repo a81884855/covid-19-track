@@ -27,6 +27,8 @@ module.exports = {
         return "Uninted States";
       case "Russian Federation":
         return "Russia";
+      case "Iran, Islamic Republic of":
+        return "Iran";
       default:
         return country;
     }
