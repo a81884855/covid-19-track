@@ -52,10 +52,6 @@ const fetchData = (dispatch) => async (state, info, days) => {
         recovered.push(each.timeline.recovered[recoveredData]);
       }
 
-      // if (each.country === "UK") {
-      //   console.log(each);
-      // }
-
       // In some cases, one country have mutilple provinces data
       if (data[each.country]) {
         for (let i in data[each.country].case) {
@@ -95,7 +91,6 @@ const fetchData = (dispatch) => async (state, info, days) => {
 };
 
 const updateSeries = (dispatch) => (state) => {
-  console.log(state, "update");
   dispatch({
     type: "update_series",
     playload: state,
