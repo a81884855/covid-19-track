@@ -11,8 +11,8 @@ const Footer = () => {
       <Container>
         <Row className="justify-content-center">
           {/* <h3>More about this project</h3> */}
-          {sentence.map((char) => (
-            <div className="sentence">
+          {sentence.map((char, i) => (
+            <div className="sentence" key={i}>
               {char !== " " ? char : <span style={{ marginRight: 5 }} />}
             </div>
           ))}
