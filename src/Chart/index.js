@@ -10,11 +10,11 @@ import { dateLabel } from "../helper";
 import CountryIcons from "./CountryIcons";
 import DataType from "./DataType";
 
-const defaultSet = new Set(["UK", "Russia", "Brazil"]);
+const defaultSet = new Set(["USA", "India", "Brazil", "Russia"]);
 
 const ChartComponent = () => {
   const [active, setActive] = useState(defaultSet);
-  const [info, setInfo] = useState("case");
+  const [info, setInfo] = useState("new_case");
   const [days, setDays] = useState(14);
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -52,7 +52,11 @@ const ChartComponent = () => {
 
   const getData = (country, type) => {
     switch (type) {
-      case "case":
+      case "new_case":
+        return data[country]["case"].map((num, i) =>
+          i !== 0 ? num - data[country]["case"][i - 1] : null
+        );
+      case "total_case":
         return data[country]["case"];
       case "deaths":
         return data[country]["deaths"];
@@ -65,10 +69,6 @@ const ChartComponent = () => {
       case "death_rate":
         return data[country]["deaths"].map((num, i) =>
           Number((num / data[country]["case"][i]) * 100).toFixed(1)
-        );
-      case "new_case":
-        return data[country]["case"].map((num, i) =>
-          i !== 0 ? num - data[country]["case"][i - 1] : null
         );
       default:
         return data[country]["case"];
