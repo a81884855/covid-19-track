@@ -16,7 +16,6 @@ import { colorPick, colorCalculate } from "../helper";
 
 import { MapLoading } from "../Component/MapLoading";
 import PopoverComp from "../Component/PopoverComp";
-import MapCaseSummary from "./MapCaseSummary";
 import ZoomButton from "./ZoomButton";
 
 export const WolrdMapChart = () => {
@@ -44,8 +43,8 @@ export const WolrdMapChart = () => {
         <>
           <ComposableMap
             projectionConfig={{ scale: 125, rotation: [-11, 0, 0] }}
-            width={750}
-            height={500}
+            width={820}
+            height={550}
           >
             <ZoomableGroup
               zoom={position.zoom}
@@ -117,7 +116,6 @@ export const WolrdMapChart = () => {
             </ZoomableGroup>
           </ComposableMap>
           <ZoomButton position={position} setPosition={setPosition} />
-          {MapCaseSummary()}
         </>
       ) : (
         <MapLoading />

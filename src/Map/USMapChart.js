@@ -16,8 +16,6 @@ import { OverlayTrigger } from "react-bootstrap";
 
 import allStates from "../Data/allStates.json";
 
-import MapCaseSummary from "./MapCaseSummary";
-
 import { MapLoading } from "../Component/MapLoading";
 import PopoverComp from "../Component/PopoverComp";
 
@@ -161,7 +159,6 @@ const USMapChart = () => {
             </Geographies>
             }
           </ComposableMap>
-          <MapCaseSummary />
         </>
       ) : (
         <MapLoading />

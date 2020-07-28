@@ -5,7 +5,8 @@ import USMapChart from "./USMapChart";
 
 import Tabs from "../Component/Tabs";
 import { SourceDisplay } from "../Component/SourceDisplay";
-import { Paper } from "@material-ui/core";
+// import { Paper } from "@material-ui/core";
+import MapCaseSummary from "./MapCaseSummary";
 
 const MapChart = () => {
   const [map, setMap] = useState("World");
@@ -37,7 +38,15 @@ const MapChart = () => {
   return (
     <>
       <Tabs setMap={setMap} />
-      <Paper elevation={3}>{mapDisplay(map)}</Paper>
+      <div
+        style={{
+          minHeight: "calc(100vh - 115px)",
+        }}
+        elevation={3}
+      >
+        {mapDisplay(map)}
+      </div>
+      {MapCaseSummary()}
       <SourceDisplay map={map} />
     </>
   );
