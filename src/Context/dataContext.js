@@ -10,17 +10,44 @@ const trackReducer = (state, action) => {
         mapCountries: action.playload.data,
         tableData: action.playload.sortedData,
       };
+    case "fetch_country_info":
+      return {
+        ...state,
+        countryInfo: action.playload,
+      };
+    case "handle_change_cases_type":
+      return {
+        ...state,
+        casesType: action.playload,
+      };
+    case "handle_change_country":
+      return {
+        ...state,
+        country: action.playload.country,
+        countryInfo: action.playload.data,
+        mapCenter: action.playload.mapCenter,
+        mapZoom: action.playload.zoom,
+      };
     default:
       return {};
   }
+};
+
+const getCountryInfo = (dispatch) => async () => {
+  const { data } = await axios.get("https://disease.sh/v3/covid-19/all");
+  return dispatch({
+    type: "fetch_country_info",
+    playload: data,
+  });
 };
 
 const getCountriesData = (dispatch) => async () => {
   const { data } = await axios.get("https://disease.sh/v3/covid-19/countries");
   const countries = data.map((country) => ({
     name: country.country,
-    valye: country.countryInfo.iso2,
+    value: country.countryInfo.iso2,
   }));
+  countries.unshift({ name: "worldwide", value: "worldwide" });
   let sortedData = [...data].sort((a, b) => b.cases - a.cases);
   return dispatch({
     type: "fetch_countries_data",
@@ -28,9 +55,39 @@ const getCountriesData = (dispatch) => async () => {
   });
 };
 
+const handleChangeCaseTypes = (dispatch) => async (caseType) => {
+  return dispatch({
+    type: "handle_change_cases_type",
+    playload: caseType,
+  });
+};
+
+const handleChangeCountry = (dispatch) => async (country) => {
+  const url =
+    country === "worldwide"
+      ? "https://disease.sh/v3/covid-19/all"
+      : `https://disease.sh/v3/covid-19/countries/${country}`;
+
+  const { data } = await axios.get(url);
+  const mapCenter = data.countryInfo
+    ? [data.countryInfo.lat, data.countryInfo.long]
+    : [34.80746, -40.4796];
+  const zoom = 4;
+
+  return dispatch({
+    type: "handle_change_country",
+    playload: { country, data, mapCenter, zoom },
+  });
+};
+
 export const { Provider, Context } = createDataContext(
   trackReducer,
-  { getCountriesData },
+  {
+    getCountriesData,
+    getCountryInfo,
+    handleChangeCaseTypes,
+    handleChangeCountry,
+  },
   {
     country: "worldwide",
     countryInfo: {},
