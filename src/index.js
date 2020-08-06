@@ -5,14 +5,15 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider as DataProvider } from "./Context/dataContext";
 
+import "react-widgets/dist/css/react-widgets.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <DataProvider>
-      <App />
-    </DataProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <DataProvider>
+    <App />
+  </DataProvider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 
