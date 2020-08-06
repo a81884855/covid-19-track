@@ -41,17 +41,6 @@
   margin-top: 5px;
 }
 
-.info-confirmed div {
-  color: #427cd2;
-}
-
-.info-recovered div {
-  color: #2eb85c;
-}
-
-.info-deaths div {
-  color: #c74333;
-}
 .info-confirmed small,
 .info-recovered small,
 .info-deaths small {
