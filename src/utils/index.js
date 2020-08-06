@@ -1,6 +1,5 @@
 import React from "react";
-import numeral from "numeral";
-import { Circle, Popup } from "react-leaflet";
+import { Circle, Tooltip } from "react-leaflet";
 
 const casesTypeColors = {
   cases: {
@@ -13,18 +12,15 @@ const casesTypeColors = {
     hex: "#7dd71d",
     rgb: "rgb(125, 215, 29)",
     half_op: "rgba(125, 215, 29, 0.5)",
-    multiplier: 600,
+    multiplier: 800,
   },
   deaths: {
     hex: "#fb4443",
     rgb: "rgb(251, 68, 67)",
     half_op: "rgba(251, 68, 67, 0.5)",
-    multiplier: 1000,
+    multiplier: 2000,
   },
 };
-
-export const prettyPrintStat = (stat) =>
-  stat ? `+${numeral(stat).format("0.0a")}` : "+0";
 
 export const rounded = (num) => {
   if (num > 1000000000) {
@@ -41,6 +37,7 @@ export const rounded = (num) => {
 export const showDataOnMap = (data, casesType = "cases") =>
   data.map((country) => (
     <Circle
+      key={country.country}
       center={[country.countryInfo.lat, country.countryInfo.long]}
       color={casesTypeColors[casesType].hex}
       fillColor={casesTypeColors[casesType].hex}
@@ -49,7 +46,7 @@ export const showDataOnMap = (data, casesType = "cases") =>
         Math.sqrt(country[casesType]) * casesTypeColors[casesType].multiplier
       }
     >
-      <Popup>
+      <Tooltip>
         <div className="info-container">
           <div
             className="info-flag"
@@ -87,6 +84,6 @@ export const showDataOnMap = (data, casesType = "cases") =>
             </div>
           </div>
         </div>
-      </Popup>
+      </Tooltip>
     </Circle>
   ));
