@@ -1,0 +1,11 @@
+.info-confirmed {
+  color: #427cd2;
+}
+
+.info-recovered {
+  color: #2eb85c;
+}
+
+.info-deaths {
+  color: #c74333;
+}
