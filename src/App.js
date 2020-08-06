@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "./App.css";
 import { Container, Row, Col } from "reactstrap";
-import axios from "axios";
-
+import { Context as dataContext } from "./Context/dataContext";
 import Map from "./Map";
 
 function App() {
-  const [mapCountries, setMapCountries] = useState([]);
-  const [caseType, setCaseType] = useState("case");
-  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
-  const [mapZoom, setMapZoom] = useState(3);
+  const {
+    state: { countries, mapCountries, tableData },
+    getCountriesData,
+  } = useContext(dataContext);
 
-  const getCountriesData = async () => {
-    const { data } = axios.get("https://disease.sh/v3/covid-19/countries");
-  };
+  useEffect(() => {
+    getCountriesData();
+  }, []);
 
-  useEffect(() => {});
   return (
     <div className="App">
       <Container>
