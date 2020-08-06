@@ -1,0 +1,15 @@
+.App {
+  margin: 10px 2rem;
+}
+
+.app_header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdown-box {
+  width: 138px;
+  display: block;
+  align-self: center;
+  margin: 5px;
+}
