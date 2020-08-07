@@ -14,13 +14,23 @@
   margin: 5px;
 }
 
+.card::-webkit-scrollbar {
+  display: none;
+}
+
 .table_container {
   padding: 15px 20px 5px;
   margin-bottom: 15px;
+  margin-top: 10px;
 }
 
 .chart_container {
   padding: 15px;
-  height: 38vh;
-  overflow: auto;
+  /* height: 41vh;
+  overflow: auto; */
+  border-radius: 5%;
+}
+
+.chart_container h4 {
+  margin-left: 15px;
 }
