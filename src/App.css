@@ -21,6 +21,6 @@
 
 .chart_container {
   padding: 15px;
-  height: 32vh;
-  overflow: scroll;
+  height: 38vh;
+  overflow: auto;
 }

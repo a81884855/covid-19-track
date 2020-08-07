@@ -27,7 +27,7 @@ function App() {
   return (
     <div className="App">
       <Row>
-        <Col md={12} lg={8}>
+        <Col lg={12} xl={8}>
           <div className="app_header">
             <h1>COVID-19 Tracker</h1>
             <div className="dropdown-box">
@@ -44,7 +44,7 @@ function App() {
           <InfoBox />
           <Map />
         </Col>
-        <Col md={12} lg={4}>
+        <Col lg={12} xl={4}>
           <Card className="table_container">
             <Table />
           </Card>
