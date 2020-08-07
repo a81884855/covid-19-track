@@ -28,7 +28,7 @@ const Chart = () => {
     stroke: {
       width: 5,
       curve: "straight",
-      dashArray: [0, 8, 5],
+      dashArray: [0, 1, 3],
     },
     legend: {
       tooltipHoverFormatter: function (val, opts) {
@@ -49,12 +49,7 @@ const Chart = () => {
     xaxis: {
       categories: historyDays,
       labels: {
-        style: {
-          fontSize: "15px",
-          fontFamily: "Helvetica, Arial, sans-serif",
-          fontWeight: 400,
-          cssClass: "apexcharts-xaxis-label",
-        },
+        show: false,
       },
     },
     yaxis: {
@@ -82,7 +77,7 @@ const Chart = () => {
 
   return (
     <div>
-      <h4>History Data</h4>
+      <h4>History Data (Past 120 days)</h4>
       <ApexChart options={options} series={historyData} />
     </div>
   );
