@@ -1,6 +1,6 @@
 {
-  "short_name": "COVID-19 Track",
-  "name": "COVID-19 Track",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,14 +8,14 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo150.png",
+      "src": "logo192.png",
       "type": "image/png",
-      "sizes": "150x150"
+      "sizes": "192x192"
     },
     {
-      "src": "logo310.png",
+      "src": "logo512.png",
       "type": "image/png",
-      "sizes": "310x310"
+      "sizes": "512x512"
     }
   ],
   "start_url": ".",
