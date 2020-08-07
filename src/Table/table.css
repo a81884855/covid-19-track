@@ -1,0 +1,9 @@
+.table {
+  margin-top: 5px;
+  height: 50vh;
+  overflow: scroll;
+}
+
+span#casesType {
+  text-transform: capitalize;
+}
