@@ -15,9 +15,11 @@
 
 .card-box div {
   font-weight: 500;
-  font-size: 1.7rem;
+  font-size: 1.95rem;
+  margin-bottom: 5px;
 }
 
 .card-box small {
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
