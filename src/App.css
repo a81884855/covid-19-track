@@ -13,3 +13,14 @@
   align-self: center;
   margin: 5px;
 }
+
+.table_container {
+  padding: 15px 20px 5px;
+  margin-bottom: 15px;
+}
+
+.chart_container {
+  padding: 15px;
+  height: 32vh;
+  overflow: scroll;
+}
