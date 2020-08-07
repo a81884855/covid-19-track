@@ -28,6 +28,12 @@ const trackReducer = (state, action) => {
         mapCenter: action.playload.mapCenter,
         mapZoom: action.playload.zoom,
       };
+    case "fetch_history_data":
+      return {
+        ...state,
+        historyData: action.playload.series,
+        historyDays: action.playload.dates,
+      };
     default:
       return {};
   }
@@ -80,6 +86,31 @@ const handleChangeCountry = (dispatch) => async (country) => {
   });
 };
 
+const fetchHistoryData = (dispatch) => async (country, caseType) => {
+  const url =
+    country === "worldwide"
+      ? "https://disease.sh/v3/covid-19/historical/all?lastdays=120"
+      : `https://disease.sh/v3/covid-19/historical/${country}?lastdays=120`;
+
+  let { data } = await axios.get(url);
+
+  if (country !== "worldwide") data = data.timeline;
+
+  const series = [
+    {
+      name: "country",
+      data: Object.values(data[caseType]),
+    },
+  ];
+
+  const dates = Object.keys(data[caseType]);
+
+  return dispatch({
+    type: "fetch_history_data",
+    playload: { series, dates },
+  });
+};
+
 export const { Provider, Context } = createDataContext(
   trackReducer,
   {
@@ -87,6 +118,7 @@ export const { Provider, Context } = createDataContext(
     getCountryInfo,
     handleChangeCaseTypes,
     handleChangeCountry,
+    fetchHistoryData,
   },
   {
     country: "worldwide",
@@ -97,5 +129,7 @@ export const { Provider, Context } = createDataContext(
     casesType: "cases",
     mapCenter: { lat: 34.80746, lng: -40.4796 },
     mapZoom: 3,
+    historyData: [],
+    historyDays: [],
   }
 );
