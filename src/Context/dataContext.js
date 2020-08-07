@@ -49,6 +49,7 @@ const getCountryInfo = (dispatch) => async () => {
 
 const getCountriesData = (dispatch) => async () => {
   const { data } = await axios.get("https://disease.sh/v3/covid-19/countries");
+
   const countries = data.map((country) => ({
     name: country.country,
     value: country.countryInfo.iso2,
@@ -75,10 +76,11 @@ const handleChangeCountry = (dispatch) => async (country) => {
       : `https://disease.sh/v3/covid-19/countries/${country}`;
 
   const { data } = await axios.get(url);
+
   const mapCenter = data.countryInfo
     ? [data.countryInfo.lat, data.countryInfo.long]
     : [34.80746, -40.4796];
-  const zoom = 4;
+  const zoom = 5;
 
   return dispatch({
     type: "handle_change_country",
@@ -86,24 +88,31 @@ const handleChangeCountry = (dispatch) => async (country) => {
   });
 };
 
-const fetchHistoryData = (dispatch) => async (country, caseType) => {
+const fetchHistoryData = (dispatch) => async (country) => {
   const url =
     country === "worldwide"
-      ? "https://disease.sh/v3/covid-19/historical/all?lastdays=120"
-      : `https://disease.sh/v3/covid-19/historical/${country}?lastdays=120`;
+      ? "https://disease.sh/v3/covid-19/historical/all?lastdays=121"
+      : `https://disease.sh/v3/covid-19/historical/${country}?lastdays=121`;
 
   let { data } = await axios.get(url);
 
   if (country !== "worldwide") data = data.timeline;
 
-  const series = [
-    {
-      name: "country",
-      data: Object.values(data[caseType]),
-    },
-  ];
+  let caseTypes = ["cases", "recovered", "deaths"];
 
-  const dates = Object.keys(data[caseType]);
+  const series = caseTypes.map((caseType) => {
+    const objectValue = Object.values(data[caseType]);
+    const seriesData = objectValue.map((each, i) =>
+      objectValue[i + 1] - each > 0 ? objectValue[i + 1] - each : 0
+    );
+    seriesData.pop();
+    return {
+      name: `${caseType.charAt(0).toUpperCase()}${caseType.slice(1)}`,
+      data: seriesData,
+    };
+  });
+
+  const dates = Object.keys(data["cases"]).slice(1);
 
   return dispatch({
     type: "fetch_history_data",
