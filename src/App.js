@@ -45,11 +45,11 @@ function App() {
           <Map />
         </Col>
         <Col lg={12} xl={4}>
-          <Card className="table_container">
-            <Table />
-          </Card>
           <Card className="chart_container">
             <Chart />
+          </Card>
+          <Card className="table_container">
+            <Table />
           </Card>
         </Col>
       </Row>
