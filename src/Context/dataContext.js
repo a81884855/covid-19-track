@@ -34,6 +34,11 @@ const trackReducer = (state, action) => {
         historyData: action.playload.series,
         historyDays: action.playload.dates,
       };
+    case "fetch_news_data":
+      return {
+        ...state,
+        newsData: action.playload,
+      };
     default:
       return {};
   }
@@ -59,6 +64,17 @@ const getCountriesData = (dispatch) => async () => {
   return dispatch({
     type: "fetch_countries_data",
     playload: { countries, data, sortedData },
+  });
+};
+
+const getNewsData = (dispatch) => async () => {
+  let apiKey = "f5dc9e6860394cb68131d82cea6fc0a0";
+  const { data } = await axios.get(
+    `https://newsapi.org/v2/everything?q=COVID&sortBy=publishedAt&apiKey=${apiKey}&pageSize=20&page=1`
+  );
+  return dispatch({
+    type: "fetch_news_data",
+    playload: data.articles,
   });
 };
 
@@ -125,6 +141,7 @@ export const { Provider, Context } = createDataContext(
   {
     getCountriesData,
     getCountryInfo,
+    getNewsData,
     handleChangeCaseTypes,
     handleChangeCountry,
     fetchHistoryData,
@@ -140,5 +157,6 @@ export const { Provider, Context } = createDataContext(
     mapZoom: 3,
     historyData: [],
     historyDays: [],
+    newsData: [],
   }
 );
