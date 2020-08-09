@@ -6,9 +6,11 @@ import { DropdownList } from "react-widgets";
 
 import { Context as dataContext } from "./Context/dataContext";
 import Map from "./Map";
+import CountriesTable from "./CountriesTable";
 import InfoBox from "./InfoBox";
 import Table from "./Table";
 import Chart from "./Chart";
+import News from "./News";
 
 function App() {
   const dropDownRef = createRef();
@@ -17,11 +19,13 @@ function App() {
     getCountryInfo,
     getCountriesData,
     handleChangeCountry,
+    getNewsData,
   } = useContext(dataContext);
 
   useEffect(() => {
     getCountriesData();
     getCountryInfo();
+    getNewsData();
   }, []);
 
   return (
@@ -43,6 +47,7 @@ function App() {
           </div>
           <InfoBox />
           <Map />
+          <CountriesTable />
         </Col>
         <Col lg={12} xl={4}>
           <Card className="chart_container">
@@ -50,6 +55,9 @@ function App() {
           </Card>
           <Card className="table_container">
             <Table />
+          </Card>
+          <Card className="news-container">
+            <News />
           </Card>
         </Col>
       </Row>
