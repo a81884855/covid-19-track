@@ -31,7 +31,7 @@ const InfoBox = () => {
   } = useContext(dataContext);
   return (
     <Row className="mt-2">
-      <Col sm={10} md={4}>
+      <Col xs={12} sm={4}>
         <CardBox
           active={casesType === "cases"}
           title="Coronavirus Cases"
@@ -42,7 +42,7 @@ const InfoBox = () => {
         />
       </Col>
 
-      <Col sm={10} md={4}>
+      <Col xs={12} sm={4}>
         <CardBox
           active={casesType === "recovered"}
           title="Recovered"
@@ -53,7 +53,7 @@ const InfoBox = () => {
         />
       </Col>
 
-      <Col sm={10} md={4}>
+      <Col xs={12} sm={4}>
         <CardBox
           active={casesType === "deaths"}
           title="Deaths"
