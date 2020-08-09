@@ -24,13 +24,21 @@
   margin-top: 10px;
 }
 
+.news-container {
+  margin-bottom: 15px;
+  padding: 15px;
+}
+
 .chart_container {
   padding: 15px;
-  /* height: 41vh;
-  overflow: auto; */
   border-radius: 5%;
 }
 
 .chart_container h4 {
   margin-left: 15px;
+}
+
+.card {
+  border-radius: 1.25rem !important;
+  margin-top: 20px;
 }
