@@ -7,6 +7,7 @@ import { Provider as DataProvider } from "./Context/dataContext";
 
 import "react-widgets/dist/css/react-widgets.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-table-6/react-table.css";
 
 ReactDOM.render(
   // <React.StrictMode>
