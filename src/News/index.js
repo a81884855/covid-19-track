@@ -9,7 +9,7 @@ const NewsBox = ({ article }) => (
   <div className="news-box">
     <Row>
       <Col xs={4}>
-        <CardImg src={article.urlToImage} alt="" />
+        <CardImg src={article.image} alt="" />
       </Col>
       <Col xs={8}>
         <a href={article.url}>

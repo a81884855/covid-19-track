@@ -68,9 +68,9 @@ const getCountriesData = (dispatch) => async () => {
 };
 
 const getNewsData = (dispatch) => async () => {
-  let apiKey = "f5dc9e6860394cb68131d82cea6fc0a0";
+  let apiToken = "20b210fc6e08d7caf9593096e09dd6c4";
   const { data } = await axios.get(
-    `https://newsapi.org/v2/everything?q=COVID&sortBy=publishedAt&apiKey=${apiKey}&pageSize=20&page=1`
+    `https://gnews.io/api/v3/search?q=covid-19&token=${apiToken}`
   );
   return dispatch({
     type: "fetch_news_data",
